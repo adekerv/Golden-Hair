@@ -1,133 +1,152 @@
-# Golden Hair — guide Laravel pour la formation DWWM
+# Golden Hair — intégration Laravel et guide DWWM
 
-## Ce qui a été créé
+## Le projet
 
-Le dépôt initial contenait uniquement `README.md`. Il n’y avait donc aucun code applicatif existant à corriger. Le README original est conservé.
+Site vitrine public pour GOLDEN HAIR, basé sur la maquette HTML fournie. Il présente le salon, les coiffures, les tarifs, les produits et les coordonnées. Aucun compte, aucune réservation en ligne, aucun paiement et aucune base de données ne sont nécessaires.
 
-Le projet utilise le squelette officiel Laravel 13, Blade, CSS et JavaScript natif. Le texte français est une proposition provisoire : aucun cahier des charges, catalogue, tarif, logo ou contact n’était présent. La page ne comporte pas de réservation ni de boutique fonctionnelle.
+La maquette fournie est la référence visuelle : charbon, ivoire, or et bordeaux ; polices Cormorant Garamond et DM Sans ; grand logo ; cartes défilantes ; liste de tarifs dépliable.
 
-## Lancer le projet
+## Lancer et modifier le site
 
-Les dépendances PHP sont installées. Le site vitrine fonctionne sans base de données : les sessions et le cache utilisent des fichiers, et aucune tâche en arrière-plan n’est nécessaire.
+Sur cette machine, les dépendances et les fichiers compilés sont prêts :
 
 ```sh
 php artisan serve
 ```
 
-Ouvrir l’adresse indiquée dans le terminal, généralement `http://127.0.0.1:8000`.
+Ouvrir `http://127.0.0.1:8000` (ou le port indiqué par Artisan).
 
-Pour une nouvelle copie du dépôt, avec PHP et Composer installés :
-
-```sh
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan serve
-```
-
-Le fichier `composer.lock` fixe les versions réellement installées. Vérifier leur compatibilité avec `composer check-platform-reqs` sur une autre machine. Ne pas partager `.env` : il contient notamment la clé de l’application.
-
-Les fichiers de cette page sont servis directement depuis `public/css` et `public/js` : aucune compilation npm n’est nécessaire. Les fichiers Vite du squelette sont conservés pour une évolution future ; ils ne sont pas chargés par le layout actuel.
-
-## Structure
-
-```text
-app/
-  Http/Controllers/HomeController.php   Contrôleur de l’accueil
-bootstrap/                             Démarrage et configuration du framework
-config/
-  business.php                         Textes, coordonnées, prestations, horaires et photos
-  auth.php                             Aucun guard ni fournisseur d’utilisateurs
-database/                              Répertoire Laravel conservé, inutilisé par la page
-public/                                Seul dossier à exposer sur un serveur web
-  index.php                            Point d’entrée HTTP de Laravel
-  css/app.css                          Styles du site
-  js/navigation.js                     Menu mobile
-  images/business/                     Photo principale et photos du lieu
-  images/gallery/                      Photos de la galerie
-  images/branding/                     Logo et éléments de marque
-resources/views/
-  layouts/app.blade.php                 Structure HTML partagée
-  pages/home.blade.php                  Contenu de l’accueil
-  partials/navigation.blade.php         Barre de navigation
-  partials/footer.blade.php             Pied de page
-  sections/gallery.blade.php            Galerie facultative
-  sections/business-info.blade.php      Coordonnées, horaires et prestations
-routes/web.php                         Association URL → contrôleur
-storage/                               Logs, caches et fichiers générés
-tests/                                 Tests automatisés
-artisan                                Commandes Laravel
-composer.json                          Dépendances PHP et scripts
-composer.lock                          Versions des dépendances
-```
-
-## Le code, étape par étape
-
-### 1. La requête arrive sur une route
-
-Dans `routes/web.php`, `Route::get('/', [HomeController::class, 'index'])->name('home')` associe une requête HTTP GET sur `/` à la méthode `index` du contrôleur. Le nom `home` permet de générer son URL avec `route('home')`, sans écrire cette URL partout.
-
-### 2. Le contrôleur choisit la vue
-
-Dans `HomeController`, `index(): View` annonce que la méthode renvoie une vue. `view('pages.home', ...)` charge `resources/views/pages/home.blade.php`. Le point représente un sous-dossier. `config('business')` lit les informations du commerce. Le contrôleur transmet ces informations à Blade et vérifie que les fichiers photo existent dans `public/images`. Aucun modèle ni accès à une base de données n’est nécessaire.
-
-### 3. La page utilise un layout
-
-`@extends('layouts.app')` indique que l’accueil utilise le squelette commun. `@section('title', ...)` définit son titre et `@section('content')` contient son HTML principal. `@endsection` termine cette section.
-
-### 4. Le layout assemble le document
-
-`layouts/app.blade.php` contient `<!DOCTYPE html>`, `<head>` et `<body>`. `@yield('title', 'Golden Hair')` insère le titre avec une valeur par défaut. `@yield('content')` insère le contenu de la page. `@include` charge les fichiers partagés de navigation et de pied de page.
-
-`{{ asset('css/app.css') }}` génère l’URL d’un fichier public. Les doubles accolades Blade échappent le texte affiché. `defer` permet au navigateur d’exécuter le JavaScript une fois le HTML analysé.
-
-### 5. Le HTML donne du sens au contenu
-
-`nav` identifie la navigation, `main` le contenu principal et `footer` le pied de page. Les titres `h1`, `h2` et `h3` structurent la lecture. Les liens avec `#univers` et `#approche` conduisent à des sections existantes. Le lien « Aller au contenu » permet de contourner la navigation au clavier.
-
-### 6. Le CSS adapte la mise en page
-
-Les variables dans `:root` centralisent les couleurs. Flexbox aligne la navigation. CSS Grid organise l’accueil et les trois colonnes. `clamp()` adapte la taille des titres dans des limites définies. La règle `@media (max-width: 48rem)` passe les grilles à une colonne et adapte la navigation aux petits écrans.
-
-### 7. Le JavaScript contrôle le menu
-
-`querySelector` récupère le bouton et les liens. `matchMedia` suit le même seuil que le CSS. `setOpen()` synchronise la visibilité des liens et `aria-expanded`, qui indique l’état du bouton aux technologies d’assistance. Un clic ouvre ou ferme le menu. Échap ferme le menu et replace le focus sur le bouton. Un changement de largeur réinitialise l’état. Sans JavaScript, les liens restent accessibles et le bouton reste masqué.
-
-### 8. Vérifier sans corriger automatiquement
+Pour modifier les styles ou le JavaScript avec rechargement automatique, garder Artisan ouvert et lancer dans un deuxième terminal :
 
 ```sh
-php artisan test
-php artisan route:list --except-vendor
-php artisan view:cache
-php artisan view:clear
-vendor/bin/pint --test
-node --check public/js/navigation.js
+npm run dev
+```
+
+Sans serveur Vite actif, recompiler après une modification du CSS, du JavaScript ou des classes Tailwind dans les vues :
+
+```sh
+npm run build
+```
+
+Sur une nouvelle copie : `composer run setup`, puis `php artisan serve`. Le script installe les dépendances PHP et npm, prépare `.env` et compile les assets. Pas de migration nécessaire. Ne pas régénérer la clé d’une application déjà déployée : le script setup sert à l’initialisation.
+
+Les fichiers `.env`, `vendor/`, `node_modules/` et `public/build/` ne sont pas versionnés. `composer.lock` et `package-lock.json` fixent les versions des dépendances. Le serveur web doit exposer uniquement `public/`.
+
+## Où modifier quoi ?
+
+| Fichier ou dossier | Rôle |
+| --- | --- |
+| `routes/web.php` | Route publique `/`, nommée `home` |
+| `app/Http/Controllers/Controller.php` | Classe de base des contrôleurs ; aucune authentification |
+| `app/Http/Controllers/HomeController.php` | Charge les informations et vérifie les fichiers photo |
+| `config/business.php` | Coordonnées, prestations, 50 tarifs, produits et photos |
+| `resources/views/layouts/app.blade.php` | Document HTML, métadonnées, polices et assets Vite |
+| `resources/views/pages/home.blade.php` | Assemble les sections |
+| `resources/views/partials/navigation.blade.php` | Navigation ordinateur et menu mobile |
+| `resources/views/partials/price-list.blade.php` | Liste complète des tarifs |
+| `resources/views/partials/footer.blade.php` | Pied de page |
+| `resources/views/sections/` | Hero, coiffures, produits, galerie facultative et contact |
+| `resources/css/app.css` | Thème Tailwind 4 et règles complémentaires |
+| `resources/js/navigation.js` | Fermeture du menu, touche Échap, gestion du focus |
+| `resources/js/carousels.js` | Flèches, défilement clavier et état des boutons |
+| `resources/js/app.js` | Point d’entrée JavaScript |
+| `public/images/branding/` | Logo extrait du HTML fourni, sans transformation |
+| `public/images/business/` | Photo principale facultative |
+| `public/images/services/` | Photos des coiffures |
+| `public/images/products/` | Photos des produits |
+| `public/images/gallery/` | Autres photos du salon |
+| `tests/Feature/LandingPageTest.php` | Tests du rendu et du contenu |
+
+## Le fonctionnement, étape par étape
+
+1. Le navigateur demande `/`. Laravel trouve la route dans `routes/web.php` et appelle `HomeController::index()`.
+2. `config('business')` lit le tableau PHP contenant les informations du salon. Le contrôleur prépare les données pour la vue et ignore les fichiers photo absents, hors de `public/images` ou d’un format non pris en charge.
+3. `view('pages.home', compact(...))` transmet les variables à la page. La notation avec un point correspond aux sous-dossiers de `resources/views`.
+4. `@extends('layouts.app')` utilise le document partagé. `@section` définit le contenu et `@yield` l’insère. Les `@include` assemblent les sections.
+5. `@foreach` construit les cartes et les lignes de tarifs à partir des tableaux. `@if` affiche une photo si elle existe. `@forelse` affiche les produits renseignés ou les cartes d’attente. `{{ ... }}` échappe le texte HTML pour éviter qu’une description devienne du code exécuté.
+6. `@vite` charge le CSS et le JavaScript. En production, les noms de fichiers contiennent un hash : une nouvelle compilation crée une nouvelle URL, ce qui évite de garder une ancienne version en cache.
+7. Tailwind génère les styles des classes présentes dans les vues. Les couleurs et les polices sont définies dans `@theme`. Les préfixes `sm:` et `lg:` adaptent la présentation à la largeur de l’écran. Les quelques règles CSS supplémentaires gèrent les carrousels, les prix et le focus clavier.
+8. Les carrousels utilisent le défilement natif et le scroll snap. JavaScript ajoute le déplacement d’une carte avec les boutons ou les flèches du clavier quand la piste a le focus. Les boutons sont masqués si toutes les cartes sont visibles et désactivés en début/fin de piste. Il n’y a pas de défilement automatique.
+9. Le menu et les tarifs utilisent `<details>` et `<summary>`, utilisables sans JavaScript. JavaScript ferme le menu après un lien, un clic extérieur ou Échap et ajuste le focus.
+
+## Ajouter les vraies informations
+
+Modifier `config/business.php`, puis exécuter `php artisan config:clear` si nécessaire.
+
+- `contact.phone` contient le numéro affiché. Mettre `contact.phone_confirmed` à `true` seulement après confirmation pour afficher le lien d’appel.
+- `contact.address` et `contact.postal_city` contiennent l’adresse. `address_confirmed` retire la mention « à confirmer ».
+- `contact.whatsapp` reste `null` tant qu’aucun numéro WhatsApp n’est validé. Pour l’activer, utiliser le numéro international, par exemple le format `596...`, sans zéro national initial. Le site ouvre WhatsApp ; il n’envoie aucun message automatiquement.
+- `contact.email` active un lien email lorsqu’il est renseigné.
+- `hours` accepte des entrées `['day' => 'Lundi', 'hours' => '09:00–17:00']`.
+- `price_groups` contient tous les tarifs de la maquette. Les prix des trois cartes dans `services` sont séparés : mettre à jour les deux emplacements si un prix change.
+- `prices_confirmed` contrôle la note générale des prix. Vérifier aussi le libellé « keeneez » et `locks_note`.
+
+## Ajouter une photo
+
+Copier votre fichier WebP, JPG, PNG ou AVIF dans le dossier approprié puis renseigner le champ `photo` de la carte :
+
+```php
+'photo' => [
+    'src' => 'images/services/tresses.webp',
+    'alt' => 'Description précise de la coiffure photographiée',
+],
+```
+
+Pour remplacer le logo dans la grande carte d’accueil, utiliser le même format dans `hero_photo`. Pour la galerie facultative, ajouter des entrées à `photos`, avec une `caption` facultative. Les chemins commencent par `images/`, sans `public/`.
+
+Les proportions des images réservent leur espace pour réduire les déplacements de mise en page. Les photos sous l’accueil sont chargées à la demande (`loading="lazy"`). Le CSS recadre les photos de coiffures avec `object-fit: cover` ; les produits utilisent `contain` pour montrer le flacon entier. Les fichiers originaux ne sont pas modifiés.
+
+## Ajouter un produit
+
+Remplacer le tableau vide `products` par des entrées de ce type :
+
+```php
+'products' => [
+    [
+        'name' => 'Nom réel du produit',
+        'brand' => 'Marque réelle',
+        'description' => 'Usage du produit',
+        'price' => 'Prix confirmé',
+        'photo' => [
+            'src' => 'images/products/produit.webp',
+            'alt' => 'Nom et présentation du produit',
+        ],
+    ],
+],
+```
+
+Les cartes d’attente disparaissent automatiquement dès qu’un produit est renseigné. Le site présente les produits ; l’achat se fait au salon.
+
+## Analyse de la maquette et corrections
+
+- Les boutons des deux carrousels étaient uniquement visuels : leurs interactions sont maintenant programmées.
+- Le menu mobile restait ouvert après navigation : fermeture et gestion du focus ajoutées.
+- Le logo était répété trois fois en base64 : un seul fichier WebP est maintenant réutilisé et peut être mis en cache.
+- Le script CDN Tailwind compilait dans le navigateur : il est remplacé par les dépendances Tailwind/Vite déjà déclarées dans le projet, avec un build local minifié.
+- Les titres avaient un interligne très serré : il a été augmenté. Les prix et coordonnées peuvent revenir à la ligne ; le menu tient dans les petits écrans.
+- Les textes secondaires ont un contraste plus élevé. Les zones cliquables et le focus clavier sont visibles. La préférence de réduction des animations est respectée.
+- Les deux faux numéros temporaires ont été remplacés par un message explicite. Le numéro réellement fourni reste affiché comme non confirmé.
+- L’affirmation « retranscrits depuis l’affiche fournie » a été remplacée : seul le HTML a été reçu dans cette conversation, pas l’affiche originale.
+- Les fichiers CSS/JS de l’ancien design et l’ancienne section d’informations ont été retirés pour garder un seul point d’entrée.
+
+## Limites et améliorations à prévoir
+
+Les photos du salon et des produits, les références produits, les horaires, la confirmation des coordonnées et des prix, et les contenus juridiques manquent encore. Le footer indique que ces derniers sont en attente ; aucun faux lien n’est créé.
+
+Priorités utiles : fournir les vraies photos en WebP/AVIF avec des tailles adaptées ; proposer plusieurs tailles avec `srcset` si les originaux sont lourds ; héberger les deux polices localement pour supprimer la requête Google Fonts ; ajouter un lien d’itinéraire une fois l’adresse confirmée. Les polices utilisent déjà `display=swap` et des polices de secours.
+
+Le fichier SQLite créé initialement est conservé, mais la page ne l’utilise pas. Les sessions et le cache sont sur fichiers. Laravel Boost est un outil de développement installé selon les instructions du dépôt.
+
+## Vérifications
+
+```sh
+php artisan test --compact
+npm run build
 composer validate --strict
+node --check resources/js/navigation.js
+node --check resources/js/carousels.js
 ```
 
-Ces commandes ne réécrivent pas les sources. Laravel peut générer des caches temporaires. `pint --test` signale les problèmes de formatage ; lancer Pint sans `--test` modifierait les fichiers.
+Le build et les tests serveur ne remplacent pas une vérification visuelle. Vérifier dans un navigateur : largeurs 320, 375, 768 et 1440 pixels, zoom 200 %, menu et Échap, liens d’ancrage sous l’en-tête fixe, défilement tactile/clavier, ouverture de la liste des prix, et absence d’images cassées.
 
-À vérifier manuellement dans le navigateur : accueil sur ordinateur et mobile, ouverture/fermeture du menu, touche Échap, navigation avec Tab, liens d’ancrage et zoom à 200 %. Les tests PHP ne vérifient pas le rendu visuel ni l’exécution du JavaScript dans un navigateur.
-
-Documentation officielle : https://laravel.com/docs/13.x/installation
-
-
-## Ajouter les informations et les photos du commerce
-
-1. Modifier `config/business.php` : `intro` et `about` pour les paragraphes, `contact` pour les coordonnées, `hours` pour les horaires et `services` pour les prestations. Les commentaires donnent le format de chaque entrée. Remplacer les textes provisoires par les informations réelles.
-2. Copier vos images JPG, PNG, WebP ou AVIF dans `public/images/business/` ou `public/images/gallery/`. Le dossier `public/images/branding/` peut recevoir votre logo ; il n’est pas encore chargé automatiquement dans la navigation.
-3. Dans `hero_photo`, remplacer `null` par `['src' => 'images/business/hero.jpg', 'alt' => 'Description précise de votre photo']` en utilisant le vrai nom de fichier.
-4. Dans `photos`, ajouter une entrée par photo avec `src`, `alt` et éventuellement `caption`. Le chemin commence par `images/`, sans `public/`. Ajouter une virgule entre les entrées.
-5. Exécuter `php artisan config:clear` si la configuration était mise en cache, puis actualiser la page.
-
-Les photos absentes sont ignorées pour éviter les images cassées. La galerie et son lien de navigation apparaissent dès qu’une photo configurée existe. Les informations pratiques apparaissent dès qu’au moins une coordonnée, un horaire ou une prestation est renseigné. Les images sont recadrées visuellement par `object-fit: cover` ; leurs fichiers originaux restent intacts.
-
-## Pourquoi retirer l’authentification ?
-
-Un site vitrine présente des informations publiques. Il n’a besoin ni de compte visiteur, ni de connexion, ni de réinitialisation de mot de passe. Le modèle User, sa factory et les migrations du squelette ont été retirés. Le seeder ne crée plus de compte de démonstration. `config/auth.php` conserve uniquement une configuration vide explicite, pour ne pas réactiver les valeurs par défaut du framework.
-
-Le fichier SQLite local précédemment créé est conservé avec ses anciennes tables ; aucune donnée existante n’a été effacée. Il n’est plus utilisé par la page. Les fonctions internes d’authentification de Laravel restent dans `vendor/`, comme le reste du framework ; elles ne constituent pas des fonctionnalités actives du site.
-
-`Controller.php` est simplement la classe de base commune aux contrôleurs. Elle n’impose aucune authentification. `HomeController.php` reste le point d’entrée du contenu.
-
-`composer run setup` prépare désormais uniquement PHP et la clé de l’application. `composer run dev` lance le serveur Laravel, sans worker ni compilation JavaScript. Laravel Boost a été installé comme dépendance de développement conformément aux instructions AGENTS.md du projet.
+Références officielles : [Blade](https://laravel.com/docs/13.x/blade), [Tailwind avec Vite](https://tailwindcss.com/docs/installation/using-vite), [thème Tailwind](https://tailwindcss.com/docs/theme).

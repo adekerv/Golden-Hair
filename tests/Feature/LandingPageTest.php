@@ -8,6 +8,12 @@ use Tests\TestCase;
 
 class LandingPageTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutVite();
+    }
+
     public function test_homepage_renders_without_a_database_and_hides_empty_sections(): void
     {
         config([
@@ -17,7 +23,8 @@ class LandingPageTest extends TestCase
         ]);
 
         $this->get('/')
-            ->assertSee('Vos cheveux.')
+            ->assertSee('Votre style.')
+            ->assertSee('Consulter la liste complète des tarifs')
             ->assertDontSee('id="photos"', false)
             ->assertDontSee('id="informations"', false);
     }
@@ -38,13 +45,15 @@ class LandingPageTest extends TestCase
         config([
             'business.contact.address' => 'Adresse de démonstration',
             'business.contact.phone' => '+596 696 00 00 00',
+            'business.contact.phone_confirmed' => true,
             'business.contact.email' => 'test@example.com',
             'business.hours' => [['day' => 'Lundi', 'hours' => '09:00–17:00']],
-            'business.services' => [['name' => 'Prestation test', 'description' => '<script>alert(1)</script>']],
+            'business.services.0.name' => 'Prestation test',
+            'business.services.0.description' => '<script>alert(1)</script>',
         ]);
 
         $this->get('/')
-            ->assertSee('id="informations"', false)
+            ->assertSee('id="contact"', false)
             ->assertSee('Adresse de démonstration')
             ->assertSee('href="tel:+596696000000"', false)
             ->assertSee('href="mailto:test@example.com"', false)
@@ -93,8 +102,45 @@ class LandingPageTest extends TestCase
         ]);
 
         $this->get('/')
-            ->assertSee('class="brand-panel"', false)
+            ->assertSee('alt="Logo Golden Hair, Haute Coiffure, Coiffure Mixte"', false)
             ->assertDontSee('id="photos"', false)
             ->assertDontSee('missing.jpg');
+    }
+
+    public function test_unconfirmed_phone_number_has_no_call_link(): void
+    {
+        $this->get('/')
+            ->assertSee('0596 97 64 78')
+            ->assertSee('Le numéro de téléphone est en cours de confirmation.')
+            ->assertDontSee('href="tel:', false)
+            ->assertDontSee('href="https://wa.me/', false);
+    }
+
+    public function test_all_supplied_price_groups_are_rendered(): void
+    {
+        $this->get('/')
+            ->assertSee('Coiffures & coupes')
+            ->assertSee('Soins & techniques')
+            ->assertSee('Micro locks avec mèches')
+            ->assertSee('Dès 600 €')
+            ->assertSee('Shampoing + Crème + Séchage');
+    }
+
+    public function test_configured_products_replace_placeholder_cards(): void
+    {
+        config(['business.products' => [[
+            'name' => 'Soin test',
+            'brand' => 'Marque test',
+            'description' => 'Description test',
+            'price' => '15 €',
+            'photo' => ['src' => 'images/products/missing.webp', 'alt' => 'Missing product'],
+        ]]]);
+
+        $this->get('/')
+            ->assertSee('Soin test')
+            ->assertSee('Marque test')
+            ->assertSee('15 €')
+            ->assertDontSee('Bientôt au catalogue')
+            ->assertDontSee('missing.webp');
     }
 }

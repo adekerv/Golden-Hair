@@ -11,11 +11,14 @@ class HomeController extends Controller
         $business = config('business');
         $photos = array_values(array_filter($business['photos'], $this->photoExists(...)));
         $heroPhoto = $this->photoExists($business['hero_photo']) ? $business['hero_photo'] : null;
-        $hasBusinessInfo = count(array_filter($business['contact'])) > 0
-            || count($business['hours']) > 0
-            || count($business['services']) > 0;
+        foreach (['services', 'products'] as $group) {
+            foreach ($business[$group] as &$item) {
+                $item['photo'] = $this->photoExists($item['photo'] ?? null) ? $item['photo'] : null;
+            }
+            unset($item);
+        }
 
-        return view('pages.home', compact('business', 'photos', 'heroPhoto', 'hasBusinessInfo'));
+        return view('pages.home', compact('business', 'photos', 'heroPhoto'));
     }
 
     /**
