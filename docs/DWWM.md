@@ -66,7 +66,7 @@ Les fichiers `.env`, `vendor/`, `node_modules/` et `public/build/` ne sont pas v
 5. `@foreach` construit les cartes et les lignes de tarifs à partir des tableaux. `@if` affiche une photo si elle existe. `@forelse` affiche les produits renseignés ou les cartes d’attente. `{{ ... }}` échappe le texte HTML pour éviter qu’une description devienne du code exécuté.
 6. `@vite` charge le CSS et le JavaScript. En production, les noms de fichiers contiennent un hash : une nouvelle compilation crée une nouvelle URL, ce qui évite de garder une ancienne version en cache.
 7. Tailwind génère les styles des classes présentes dans les vues. Les couleurs et les polices sont définies dans `@theme`. Les préfixes `sm:` et `lg:` adaptent la présentation à la largeur de l’écran. Les quelques règles CSS supplémentaires gèrent les carrousels, les prix et le focus clavier.
-8. Les carrousels utilisent le défilement natif et le scroll snap. JavaScript ajoute le déplacement d’une carte avec les boutons ou les flèches du clavier quand la piste a le focus. Les boutons sont masqués si toutes les cartes sont visibles et désactivés en début/fin de piste. Il n’y a pas de défilement automatique.
+8. Les carrousels utilisent le défilement natif et le scroll snap souple. JavaScript ajoute le déplacement d’une carte avec les boutons ou les flèches du clavier quand la piste a le focus. Les boutons sont masqués si toutes les cartes sont visibles. En début/fin de piste, aria-disabled indique la limite sans retirer le focus clavier. Il n’y a pas de défilement automatique.
 9. Le menu et les tarifs utilisent `<details>` et `<summary>`, utilisables sans JavaScript. JavaScript ferme le menu après un lien, un clic extérieur ou Échap et ajuste le focus.
 
 ## Ajouter les vraies informations
@@ -98,7 +98,7 @@ Les proportions des images réservent leur espace pour réduire les déplacement
 
 ## Ajouter un produit
 
-Remplacer le tableau vide `products` par des entrées de ce type :
+Quatre exemples sont maintenant présents dans `products`. Remplacer leurs valeurs ou dupliquer une entrée pour ajouter une carte :
 
 ```php
 'products' => [
@@ -115,7 +115,7 @@ Remplacer le tableau vide `products` par des entrées de ce type :
 ],
 ```
 
-Les cartes d’attente disparaissent automatiquement dès qu’un produit est renseigné. Le site présente les produits ; l’achat se fait au salon.
+Chaque entrée de products produit une carte. Une photo manquante affiche « Photo à venir », et un prix absent affiche « Prix à renseigner ». Le site présente les produits ; l’achat se fait au salon.
 
 ## Analyse de la maquette et corrections
 
@@ -150,3 +150,10 @@ node --check resources/js/carousels.js
 Le build et les tests serveur ne remplacent pas une vérification visuelle. Vérifier dans un navigateur : largeurs 320, 375, 768 et 1440 pixels, zoom 200 %, menu et Échap, liens d’ancrage sous l’en-tête fixe, défilement tactile/clavier, ouverture de la liste des prix, et absence d’images cassées.
 
 Références officielles : [Blade](https://laravel.com/docs/13.x/blade), [Tailwind avec Vite](https://tailwindcss.com/docs/installation/using-vite), [thème Tailwind](https://tailwindcss.com/docs/theme).
+
+
+## Guide pratique des produits
+
+Voir [PRODUCTS.md](PRODUCTS.md) pour les étapes en anglais : dossier des photos, champs à modifier, duplication d’une carte et résolution des images absentes. Le template réutilisable est `resources/views/partials/product-card.blade.php`.
+
+Tests JavaScript sans dépendance supplémentaire : `node --test tests/Frontend/*.test.js`. Ils simulent les interactions et ne remplacent pas une vérification visuelle dans un navigateur.

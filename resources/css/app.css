@@ -17,7 +17,7 @@
     body { background: var(--color-ivory); }
     section { scroll-margin-top: 1rem; }
     h1, h2, h3, p, a, dt, dd { overflow-wrap: break-word; }
-    a, button, summary, [tabindex="0"] { &:focus-visible { outline: 3px solid var(--color-gold); outline-offset: 4px; } }
+    a, button, summary, [tabindex="0"] { &:focus-visible { outline: 3px solid var(--color-charcoal); outline-offset: 3px; box-shadow: 0 0 0 6px var(--color-ivory); } }
     button, summary { cursor: pointer; }
     button:disabled { cursor: default; opacity: .35; }
     [hidden] { display: none !important; }
@@ -27,9 +27,13 @@
 .skip-link { position: fixed; top: 1rem; left: 1rem; z-index: 60; transform: translateY(-200%); border-radius: 2rem; padding: .75rem 1.25rem; background: var(--color-ivory); color: var(--color-charcoal); font-weight: 700; }
 .skip-link:focus { transform: translateY(0); }
 .logo-fade { mask-image: linear-gradient(to bottom, #000 92%, transparent); }
-.carousel-track { display: flex; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--color-gold) transparent; padding: .25rem .25rem 1.25rem; }
+.carousel-track { display: flex; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--color-wine) transparent; padding: .25rem .25rem 1.25rem; }
 .carousel-card { flex: 0 0 84%; min-width: 0; scroll-snap-align: start; }
 .carousel-button { display: flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; border-radius: 50%; font-size: 1.25rem; transition: opacity .15s; }
+.carousel-button[aria-disabled="true"] { cursor: default; opacity: .45; }
+.product-card { display: flex; flex-direction: column; overflow-wrap: anywhere; }
+.product-card > img, .product-placeholder { flex-shrink: 0; }
+.product-price { margin-top: auto; }
 .service-placeholder { color: var(--color-ivory); background: linear-gradient(135deg,#312526,var(--color-wine)); }
 .carousel-card:nth-child(2) .service-placeholder { color: var(--color-charcoal); background: linear-gradient(135deg,#cdbb9d,#b7a080); }
 .carousel-card:nth-child(3) .service-placeholder { color: var(--color-gold); background: linear-gradient(135deg,var(--color-charcoal),#4c5753); }

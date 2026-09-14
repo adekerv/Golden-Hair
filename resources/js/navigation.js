@@ -12,7 +12,11 @@ if (menu) {
         const link = event.target.closest('a');
         if (!link) return;
         close();
-        const target = document.querySelector(new URL(link.href).hash);
+        const url = new URL(link.href);
+        let anchor = url.hash.slice(1);
+        try { anchor = decodeURIComponent(anchor); } catch { /* Keep literal malformed percent signs. */ }
+        const target = url.hash && url.origin === window.location.origin && url.pathname === window.location.pathname
+            ? document.getElementById(anchor) : null;
         if (target) {
             target.setAttribute('tabindex', '-1');
             target.focus({ preventScroll: true });

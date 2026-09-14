@@ -9,11 +9,14 @@ class HomeController extends Controller
     public function index(): View
     {
         $business = config('business');
-        $photos = array_values(array_filter($business['photos'], $this->photoExists(...)));
-        $heroPhoto = $this->photoExists($business['hero_photo']) ? $business['hero_photo'] : null;
+        $photos = array_values(array_filter(array_map(
+            fn (mixed $photo): ?array => $this->preparePhoto($photo, 'Photo du salon '.$business['name']),
+            $business['photos'],
+        )));
+        $heroPhoto = $this->preparePhoto($business['hero_photo'], 'Le salon '.$business['name']);
         foreach (['services', 'products'] as $group) {
             foreach ($business[$group] as &$item) {
-                $item['photo'] = $this->photoExists($item['photo'] ?? null) ? $item['photo'] : null;
+                $item['photo'] = $this->preparePhoto($item['photo'] ?? null, $item['name'] ?? 'Photo du produit');
             }
             unset($item);
         }
@@ -22,21 +25,30 @@ class HomeController extends Controller
     }
 
     /**
-     * @param  array{src: string, alt: string, caption?: string}|null  $photo
+     * @return array{src: string, alt: string, caption?: string}|null
      */
-    private function photoExists(?array $photo): bool
+    private function preparePhoto(mixed $photo, string $fallbackAlt): ?array
     {
-        if (! $photo || empty($photo['src'])) {
-            return false;
+        if (! is_array($photo) || ! is_string($photo['src'] ?? null) || ! str_starts_with($photo['src'], 'images/')) {
+            return null;
         }
 
         $imageRoot = realpath(public_path('images'));
         $path = realpath(public_path($photo['src']));
 
-        return $imageRoot !== false
+        $exists = $imageRoot !== false
             && $path !== false
             && str_starts_with($path, $imageRoot.DIRECTORY_SEPARATOR)
             && is_file($path)
             && in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp', 'avif'], true);
+
+        if (! $exists) {
+            return null;
+        }
+
+        $photo['alt'] = is_string($photo['alt'] ?? null) && trim($photo['alt']) !== ''
+            ? $photo['alt'] : $fallbackAlt;
+
+        return $photo;
     }
 }

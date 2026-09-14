@@ -18,3 +18,5 @@ Pour modifier le front-end, lancer `npm run dev` dans un deuxième terminal. Pou
 Modifier `config/business.php` et ajouter les photos dans `public/images/`. Les coordonnées et prix repris de la maquette restent à confirmer.
 
 Voir [le guide DWWM](docs/DWWM.md) pour la structure, les explications du code et l’ajout de photos/produits.
+
+Pour ajouter vos photos et modifier les cartes produits, suivez [le guide des produits](docs/PRODUCTS.md).

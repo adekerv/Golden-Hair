@@ -15,7 +15,7 @@
           <svg aria-hidden="true" class="h-6 w-6 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           <svg aria-hidden="true" class="hidden h-6 w-6 group-open:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </summary>
-        <div class="absolute right-0 top-14 w-72 max-w-[calc(100vw-2.5rem)] rounded-2xl border border-gold/25 bg-charcoal p-3 shadow-2xl">
+        <div class="absolute right-0 top-14 max-h-[calc(100dvh-7rem)] w-72 max-w-[calc(100vw-2.5rem)] overflow-y-auto rounded-2xl border border-gold/25 bg-charcoal p-3 shadow-2xl">
           <a class="block rounded-xl px-4 py-3 hover:bg-white/5" href="#salon">Le salon</a>
           <a class="block rounded-xl px-4 py-3 hover:bg-white/5" href="#coiffures">Coiffures &amp; tarifs</a>
           <a class="block rounded-xl px-4 py-3 hover:bg-white/5" href="#produits">Produits</a>

@@ -267,5 +267,47 @@ return [
     'prices_note' => 'Tarifs repris de la maquette fournie, à confirmer auprès du salon.',
     'locks_note' => '* Libellé à confirmer auprès du salon.',
     'products' => [
+        // One array = one card. Copy photos into public/images/products/.
+        // Replace these examples with real details; duplicate an array to add a card.
+        [
+            'name' => 'Produit exemple 01',
+            'brand' => 'Marque à renseigner',
+            'description' => 'Ajoutez ici une courte description du produit et de son utilisation.',
+            'price' => 'Prix à renseigner',
+            'photo' => [
+                'src' => 'images/products/produit-01.webp',
+                'alt' => 'Photo du produit exemple 01',
+            ],
+        ],
+        [
+            'name' => 'Produit exemple 02',
+            'brand' => 'Marque à renseigner',
+            'description' => 'Ajoutez ici une courte description du produit et de son utilisation.',
+            'price' => 'Prix à renseigner',
+            'photo' => [
+                'src' => 'images/products/produit-02.webp',
+                'alt' => 'Photo du produit exemple 02',
+            ],
+        ],
+        [
+            'name' => 'Produit exemple 03',
+            'brand' => 'Marque à renseigner',
+            'description' => 'Ajoutez ici une courte description du produit et de son utilisation.',
+            'price' => 'Prix à renseigner',
+            'photo' => [
+                'src' => 'images/products/produit-03.webp',
+                'alt' => 'Photo du produit exemple 03',
+            ],
+        ],
+        [
+            'name' => 'Produit exemple 04',
+            'brand' => 'Marque à renseigner',
+            'description' => 'Ajoutez ici une courte description du produit et de son utilisation.',
+            'price' => 'Prix à renseigner',
+            'photo' => [
+                'src' => 'images/products/produit-04.webp',
+                'alt' => 'Photo du produit exemple 04',
+            ],
+        ],
     ],
 ];
