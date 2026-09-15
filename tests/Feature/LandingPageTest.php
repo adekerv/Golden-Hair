@@ -23,7 +23,9 @@ class LandingPageTest extends TestCase
         ]);
 
         $this->get('/')
-            ->assertSee('Votre style.')
+            ->assertSee('La beauté,')
+            ->assertSee('à votre image.')
+            ->assertSee('Découvrir nos prestations')
             ->assertSee('Consulter la liste complète des tarifs')
             ->assertDontSee('id="photos"', false)
             ->assertDontSee('id="informations"', false);
