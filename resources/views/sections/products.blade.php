@@ -12,7 +12,7 @@
         </div>
         @if(count($business['products']))
             <div data-carousel class="mt-12">
-                <p id="products-help" class="mb-4 text-sm text-charcoal/75">Faites glisser les cartes ou utilisez les flèches du clavier lorsque la liste est sélectionnée.</p>
+                <p id="products-help" class="mb-4 text-sm text-charcoal/75">Faites glisser les cartes ou utilisez les flèches du clavier lorsque la liste est sélectionnée. Ouvrez une fiche pour découvrir le produit et sa disponibilité.</p>
                 <div id="product-track" class="carousel-track" tabindex="0" role="region" aria-label="Sélection de produits" aria-describedby="products-help">
                     @foreach($business['products'] as $product)
                         @include('partials.product-card', ['product' => $product, 'cardNumber' => $loop->iteration])
@@ -26,6 +26,7 @@
                     </div>
                 </div>
             </div>
+            @include('partials.product-dialog')
         @else
             <p class="mt-10 text-charcoal/75">Notre sélection de produits sera bientôt disponible.</p>
         @endif

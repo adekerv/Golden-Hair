@@ -5,7 +5,7 @@ import vm from 'node:vm';
 
 const source = readFileSync(new URL('../../resources/js/carousels.js', import.meta.url), 'utf8');
 
-function carouselFixture({ reducedMotion = false, width = 300 } = {}) {
+function carouselFixture({ reducedMotion = false, width = 300, deferScroll = false } = {}) {
     const document = { activeElement: null };
     const element = () => ({
         events: {}, attributes: {},
@@ -27,6 +27,11 @@ function carouselFixture({ reducedMotion = false, width = 300 } = {}) {
         getBoundingClientRect() { return { left: 0, right: this.clientWidth }; },
         scrollTo({ left, behavior }) {
             this.lastBehavior = behavior;
+            this.pendingScroll = null;
+            if (deferScroll && behavior === 'smooth') {
+                this.pendingScroll = left;
+                return;
+            }
             this.scrollLeft = Math.max(0, Math.min(left, this.scrollWidth - this.clientWidth));
             this.events.scroll();
         },
@@ -42,12 +47,30 @@ function carouselFixture({ reducedMotion = false, width = 300 } = {}) {
     } }];
     let resize;
     class ResizeObserver { constructor(callback) { resize = callback; } observe() {} }
+    const timers = new Map();
+    let timerId = 0;
+    const frames = [];
+    const flush = () => {
+        frames.splice(0).forEach((callback) => callback());
+        const callbacks = [...timers.values()];
+        timers.clear();
+        callbacks.forEach((callback) => callback());
+    };
+    const motion = { matches: reducedMotion, addEventListener(name, callback) { this.change = callback; } };
     vm.runInNewContext(source, {
-        document, window: { matchMedia: () => ({ matches: reducedMotion }), ResizeObserver }, ResizeObserver,
-        getComputedStyle: () => ({ gap: '20px' }), setTimeout: (callback) => callback(), clearTimeout() {},
+        document, window: { matchMedia: () => motion, ResizeObserver }, ResizeObserver,
+        getComputedStyle: () => ({ paddingLeft: '0px' }),
+        requestAnimationFrame: (callback) => frames.push(callback),
+        setTimeout: (callback) => { timers.set(++timerId, callback); return timerId; },
+        clearTimeout: (id) => timers.delete(id),
     });
     const key = (value) => track.events.keydown({ target: track, key: value, preventDefault() {} });
-    return { track, previous, next, controls, status, document, resize: () => resize(), key };
+    return { track, previous, next, controls, status, document, resize: () => resize(), key, flush, motion,
+        finish() {
+            track.scrollTo({ left: track.pendingScroll ?? track.scrollLeft, behavior: 'instant' });
+            track.events.scrollend();
+            flush();
+        } };
 }
 
 test('buttons navigate, announce the visible range, and retain focus at the end', () => {
@@ -58,11 +81,12 @@ test('buttons navigate, announce the visible range, and retain focus at the end'
     assert.equal(c.track.scrollLeft, 760);
     assert.equal(c.next.getAttribute('aria-disabled'), 'true');
     assert.equal(c.document.activeElement, c.next);
+    c.flush();
     assert.equal(c.status.textContent, 'Articles 3 à 4 sur 4');
     c.next.events.click();
     assert.equal(c.track.scrollLeft, 760);
     c.previous.events.click();
-    assert.equal(c.track.scrollLeft, 490);
+    assert.equal(c.track.scrollLeft, 540);
 });
 
 test('keyboard navigation supports arrows and Home/End with reduced motion', () => {
@@ -86,4 +110,43 @@ test('resizing hides unnecessary controls and moves focus to the list', () => {
     c.track.clientWidth = 300;
     c.resize();
     assert.equal(c.controls.hidden, false);
+});
+
+
+test('rapid clicks accumulate destinations while native scrolling is still animating', () => {
+    const c = carouselFixture({ deferScroll: true });
+    c.next.events.click();
+    assert.equal(c.track.pendingScroll, 270);
+    c.track.scrollLeft = 80;
+    c.next.events.click();
+    assert.equal(c.track.pendingScroll, 540);
+    c.track.events.scrollend(); // A superseded animation must not reset the destination.
+    c.next.events.click();
+    assert.equal(c.track.pendingScroll, 760);
+    c.finish();
+    assert.equal(c.status.textContent, 'Articles 3 à 4 sur 4');
+    c.previous.events.click();
+    assert.equal(c.track.pendingScroll, 540);
+});
+
+test('touch and wheel input interrupt animation and resume from the visible position', () => {
+    for (const input of ['pointerdown', 'wheel']) {
+        const c = carouselFixture({ deferScroll: true });
+        c.next.events.click();
+        c.track.scrollLeft = 120;
+        c.track.events[input]();
+        assert.equal(c.track.pendingScroll, null);
+        assert.equal(c.track.scrollLeft, 120);
+        c.next.events.click();
+        assert.equal(c.track.pendingScroll, 270);
+    }
+});
+
+test('enabling reduced motion finishes an active animation immediately', () => {
+    const c = carouselFixture({ deferScroll: true });
+    c.next.events.click();
+    c.motion.matches = true;
+    c.motion.change();
+    assert.equal(c.track.scrollLeft, 270);
+    assert.equal(c.track.lastBehavior, 'instant');
 });

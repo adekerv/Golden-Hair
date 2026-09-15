@@ -13,7 +13,7 @@
 }
 
 @layer base {
-    html { scroll-behavior: smooth; scroll-padding-top: 7rem; }
+    html { scroll-behavior: smooth; scroll-padding-top: 7rem; scrollbar-gutter: stable; }
     body { background: var(--color-ivory); }
     section { scroll-margin-top: 1rem; }
     h1, h2, h3, p, a, dt, dd { overflow-wrap: break-word; }
@@ -27,13 +27,34 @@
 .skip-link { position: fixed; top: 1rem; left: 1rem; z-index: 60; transform: translateY(-200%); border-radius: 2rem; padding: .75rem 1.25rem; background: var(--color-ivory); color: var(--color-charcoal); font-weight: 700; }
 .skip-link:focus { transform: translateY(0); }
 .logo-fade { mask-image: linear-gradient(to bottom, #000 92%, transparent); }
-.carousel-track { display: flex; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--color-wine) transparent; padding: .25rem .25rem 1.25rem; }
+.carousel-track { display: flex; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: .25rem; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--color-wine) transparent; padding: .25rem .25rem 1.25rem; }
 .carousel-card { flex: 0 0 84%; min-width: 0; scroll-snap-align: start; }
 .carousel-button { display: flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; border-radius: 50%; font-size: 1.25rem; transition: opacity .15s; }
 .carousel-button[aria-disabled="true"] { cursor: default; opacity: .45; }
 .product-card { display: flex; flex-direction: column; overflow-wrap: anywhere; }
 .product-card > img, .product-placeholder { flex-shrink: 0; }
 .product-price { margin-top: auto; }
+.product-card-interactive { cursor: pointer; transition: border-color .2s, box-shadow .2s; }
+.product-card-interactive:focus-within { border-color: var(--color-wine); }
+.product-details-trigger { display: flex; min-height: 2.75rem; align-items: center; justify-content: space-between; gap: .75rem; list-style: none; border-radius: .35rem; }
+.stock-badge { display: inline-flex; align-items: center; gap: .5rem; border-radius: 2rem; padding: .4rem .75rem; background: #e9e4da; color: #514b40; font-size: .8125rem; font-weight: 700; }
+.stock-badge::before { content: ''; flex-shrink: 0; width: .45rem; height: .45rem; border-radius: 50%; background: currentColor; }
+.stock-badge[data-stock="in_stock"] { background: #e4eee5; color: #245736; }
+.stock-badge[data-stock="out_of_stock"] { background: #f5e1e3; color: #8d2636; }
+.product-dialog-open { overflow: hidden; }
+.product-dialog { width: min(58rem, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); margin: auto; padding: 0 1.5rem 1.5rem; border: 1px solid rgb(32 38 36 / 15%); border-radius: 1.5rem; background: var(--color-ivory); color: var(--color-charcoal); overflow: auto; overscroll-behavior: contain; }
+.product-dialog:not([open]) { display: none; }
+.product-dialog[open] { animation: product-dialog-enter .2s ease-out; }
+.product-dialog::backdrop { background: rgb(20 25 23 / 65%); }
+.product-dialog-header { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; padding-block: 1rem; background: var(--color-ivory); }
+.product-dialog-close { display: flex; align-items: center; gap: .75rem; min-height: 2.75rem; padding: .5rem 1rem; border: 1px solid rgb(32 38 36 / 25%); border-radius: 2rem; font-weight: 700; }
+.product-dialog-close span { font-size: 1.5rem; line-height: 1; }
+.product-dialog-grid { display: grid; gap: 1.5rem; }
+.product-dialog-image { width: 100%; max-height: 45dvh; aspect-ratio: 1; border-radius: 1rem; object-fit: contain; background: white; }
+.product-details-copy { line-height: 1.75; overflow-wrap: anywhere; }
+@keyframes product-dialog-enter { from { opacity: 0; transform: translateY(.5rem); } to { opacity: 1; transform: translateY(0); } }
+@media (hover: hover) { .product-card-interactive:hover { border-color: var(--color-wine); box-shadow: 0 4px 12px rgb(32 38 36 / 8%); } }
+@media (min-width: 48rem) { .product-dialog { padding: 0 2rem 2rem; } .product-dialog-grid { grid-template-columns: .9fr 1.1fr; gap: 2rem; } .product-dialog-image { max-height: 65dvh; } }
 .products-section { position: relative; isolation: isolate; }
 .products-backdrop { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
 .products-backdrop img { width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .18; }

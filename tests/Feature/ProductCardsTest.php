@@ -22,6 +22,7 @@ class ProductCardsTest extends TestCase
 
         $response = $this->get('/')->assertOk()
             ->assertSee('Prix sur demande')
+            ->assertSee('En stock')
             ->assertDontSee('Produit exemple')
             ->assertDontSee('Photo à venir');
 
@@ -31,13 +32,19 @@ class ProductCardsTest extends TestCase
             $response->assertSee($product['name'])
                 ->assertSee($product['brand'])
                 ->assertSee($product['description'])
+                ->assertSee($product['details'])
                 ->assertSee($product['photo']['alt']);
+            $this->assertSame('in_stock', $product['stock']);
         }
 
         $document = new \DOMDocument;
         @$document->loadHTML($response->getContent());
         $images = (new \DOMXPath($document))->query('//*[@id="product-track"]//img');
         $this->assertCount(28, $images);
+        $xpath = new \DOMXPath($document);
+        $this->assertCount(28, $xpath->query('//*[@id="product-track"]//details/summary[@data-product-open]'));
+        $this->assertCount(28, $xpath->query('//*[@id="product-track"]//*[@data-stock="in_stock"]'));
+        $this->assertCount(1, $xpath->query('//dialog[@aria-labelledby="product-dialog-title"]'));
         foreach ($images as $image) {
             $src = $image->getAttribute('src');
             $this->assertStringNotContainsString(' ', $src);
@@ -71,6 +78,8 @@ class ProductCardsTest extends TestCase
             ->assertSee('Mon produit')
             ->assertSee('Description à renseigner.')
             ->assertSee('Prix à renseigner')
+            ->assertSee('Disponibilité à confirmer')
+            ->assertSee('Pour en savoir plus sur ce produit')
             ->assertSee('Photo à venir');
     }
 
@@ -81,6 +90,7 @@ class ProductCardsTest extends TestCase
         $this->get('/')
             ->assertSee('Notre sélection de produits sera bientôt disponible.')
             ->assertDontSee('id="product-track"', false)
+            ->assertDontSee('<dialog', false)
             ->assertDontSee('aria-label="Produit suivant"', false);
     }
 
@@ -91,13 +101,44 @@ class ProductCardsTest extends TestCase
             'brand' => '<script>brand</script>',
             'description' => '<script>description</script>',
             'price' => '<script>price</script>',
+            'details' => '<script>details</script>',
+            'size' => '<script>size</script>',
         ]]]);
 
         $response = $this->get('/');
-        foreach (['name', 'brand', 'description', 'price'] as $field) {
+        foreach (['name', 'brand', 'description', 'price', 'details', 'size'] as $field) {
             $response->assertSee('<script>'.$field.'</script>')
                 ->assertDontSee('<script>'.$field.'</script>', false);
         }
+    }
+
+    #[DataProvider('stockStatuses')]
+    public function test_each_product_displays_its_own_stock_status(mixed $stock, string $label): void
+    {
+        config(['business.products' => [[
+            'name' => 'Produit test',
+            'stock' => $stock,
+            'details' => 'Informations complémentaires sur ce produit.',
+            'size' => '250 ml',
+        ]]]);
+
+        $this->get('/')->assertOk()
+            ->assertSee($label)
+            ->assertSee('Informations complémentaires sur ce produit.')
+            ->assertSee('250 ml')
+            ->assertSee('data-product-open', false);
+    }
+
+    public static function stockStatuses(): array
+    {
+        return [
+            'available' => ['in_stock', 'En stock'],
+            'unavailable' => ['out_of_stock', 'Rupture de stock'],
+            'unconfirmed' => ['unknown', 'Disponibilité à confirmer'],
+            'missing' => [null, 'Disponibilité à confirmer'],
+            'typo' => ['in-stok', 'Disponibilité à confirmer'],
+            'wrong type' => [true, 'Disponibilité à confirmer'],
+        ];
     }
 
     #[DataProvider('invalidPhotos')]
