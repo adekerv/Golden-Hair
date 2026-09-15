@@ -1,14 +1,14 @@
-  <header class="sticky top-0 z-40 border-b border-white/10 bg-charcoal/95 text-ivory backdrop-blur">
+  <header class="sticky top-0 z-40 border-b border-white/10 bg-charcoal/90 text-ivory shadow-[0_12px_40px_rgba(0,0,0,.12)] backdrop-blur-xl">
     <nav class="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-3 lg:px-16" aria-label="Navigation principale">
       <a href="#salon" class="flex items-center gap-3 rounded focus:outline-none focus:ring-2 focus:ring-gold" aria-label="GOLDEN HAIR — accueil">
         <img width="520" height="520" src="{{ asset($business['logo']) }}" alt="" class="h-14 w-14 rounded-full object-cover object-center ring-1 ring-gold/40 lg:h-16 lg:w-16">
-        <span class="font-display text-lg font-semibold tracking-[.10em] text-gold lg:text-2xl">GOLDEN HAIR</span>
+        <span><span class="block font-display text-lg font-semibold tracking-[.10em] text-gold lg:text-2xl">GOLDEN HAIR</span><span class="hidden text-[.58rem] uppercase tracking-[.27em] text-ivory/45 sm:block">Haute coiffure · Martinique</span></span>
       </a>
       <div class="hidden items-center gap-8 text-sm font-semibold lg:flex">
         <a class="transition hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold" href="#salon">Le salon</a>
         <a class="transition hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold" href="#coiffures">Coiffures &amp; tarifs</a>
         <a class="transition hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold" href="#produits">Produits</a>
-        <a class="rounded-full bg-wine px-6 py-3 transition hover:bg-[#a62e42] focus:outline-none focus:ring-2 focus:ring-gold" href="#contact">Contact</a>
+        <a class="rounded-full bg-gold px-6 py-3 text-charcoal transition hover:bg-[#ead49e] focus:outline-none focus:ring-2 focus:ring-gold" href="#contact">Nous contacter <span aria-hidden="true">↗</span></a>
       </div>
       <details data-mobile-menu class="group relative lg:hidden">
         <summary class="flex h-12 w-12 cursor-pointer list-none items-center justify-center rounded-full border border-gold/60 text-gold focus:outline-none focus:ring-2 focus:ring-gold" aria-label="Menu principal">
