@@ -157,3 +157,15 @@ Références officielles : [Blade](https://laravel.com/docs/13.x/blade), [Tailwi
 Voir [PRODUCTS.md](PRODUCTS.md) pour les étapes en anglais : dossier des photos, champs à modifier, duplication d’une carte et résolution des images absentes. Le template réutilisable est `resources/views/partials/product-card.blade.php`.
 
 Tests JavaScript sans dépendance supplémentaire : `node --test tests/Frontend/*.test.js`. Ils simulent les interactions et ne remplacent pas une vérification visuelle dans un navigateur.
+
+
+## Fiches produit et disponibilité
+
+1. Dans `config/business.php`, chaque produit possède `stock`, `details` et `size`. Le stock confirmé est actuellement `in_stock` pour les 28 produits. Passer à `out_of_stock` en cas de rupture ; `unknown` indique une disponibilité non confirmée.
+2. `HomeController` transforme la valeur du stock en libellé français. Une valeur absente ou incorrecte ne devient jamais automatiquement « En stock ».
+3. Blade affiche le badge et un élément HTML natif `<details>` par produit. Les champs restent échappés avec `{{ }}`.
+4. `products.js` améliore le clic : il copie les informations de la carte sélectionnée dans une seule fenêtre `<dialog>`. Aucune requête réseau ni nouvelle page ne sont nécessaires.
+5. `showModal()` rend la fenêtre modale et le reste de la page inactif. Le navigateur gère la navigation au clavier et Échap. À la fermeture, le code rétablit le focus sur « Voir la fiche » sans faire défiler la page.
+6. Sans JavaScript, `<details>` permet toujours de consulter les informations. Le stock reste manuel : modifier la configuration, vider son cache puis actualiser la page.
+
+Le carrousel conserve le défilement natif du navigateur. Il vise maintenant les positions exactes des cartes, mémorise la destination lors de clics rapides et limite les mises à jour visuelles avec `requestAnimationFrame`. Les annonces de position sont différées jusqu’à la fin du mouvement.

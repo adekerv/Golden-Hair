@@ -2,6 +2,8 @@
 
 Your product carousel contains 28 cards using the photos you supplied. Names and short French descriptions follow the visible product labels. Prices display “Prix sur demande” until you confirm them; handwritten prices remain visible in some original photos. You do not need to edit HTML to change the content or add more cards.
 
+All 28 products are marked “En stock”, as confirmed by you. Stock is a manual setting, not live inventory.
+
 The Rosemary & Mint conditioner has separate tube and pot cards. The Gabri Cologne photo shows S1, S2 and S3 together in one card.
 
 ## 1. Put the photo in the correct folder
@@ -30,6 +32,9 @@ Open `config/business.php` and search for `'products' => [`, near the bottom of 
     'brand' => 'Nom de la marque',
     'description' => 'Une courte description et le principal usage du produit.',
     'price' => 'Prix sur demande',
+    'stock' => 'in_stock',
+    'details' => 'Informations complémentaires vérifiées sur le produit et sa gamme.',
+    'size' => '250 ml',
     'photo' => [
         'src' => 'images/products/shampoing-hydratant.jpg',
         'alt' => 'Flacon du shampoing hydratant, marque et contenance',
@@ -43,6 +48,9 @@ Open `config/business.php` and search for `'products' => [`, near the bottom of 
 | `brand` | Brand name; optional |
 | `description` | One or two short sentences |
 | `price` | Confirmed price as text, for example `12,50 €` |
+| `stock` | `in_stock`, `out_of_stock` or `unknown` (see below) |
+| `details` | Longer plain-text description shown in the product popup |
+| `size` | Verified size, for example `250 ml`; leave empty if unconfirmed |
 | `photo.src` | Exact filename and path, starting with `images/products/` |
 | `photo.alt` | A useful description of what the photo shows |
 
@@ -53,11 +61,35 @@ The file on disk is `public/images/products/shampoing-hydratant.jpg`, but the co
 1. Copy your new photo into `public/images/products/`.
 2. Copy one complete product array, from its opening `[` to its closing `],`.
 3. Paste it inside the `products` array, after the last card and before the final closing `],` for the products list.
-4. Change the name, brand, description, price, photo path and alternative text.
+4. Change the name, brand, description, details, size, price, stock, photo path and alternative text. Check stock explicitly when copying a card.
 5. Keep the commas between entries. Inside single-quoted PHP text, write an apostrophe as `\'`, for example `'Huile d\'argan'`.
 6. Save, run `php artisan config:clear` and refresh the page.
 
 Each additional entry automatically creates another card. To remove a card, remove its complete array. To reorder cards, move their arrays. An empty products array displays a short availability message without empty carousel controls.
+
+## Stock and product details
+
+Click a product card or activate “Voir la fiche” with Enter to open its detail popup. It shows the larger photo, name, brand, price, stock, description and additional information. Close with “Fermer”, Escape, or a click outside the popup. Focus returns to the selected card. On small screens, the popup scrolls vertically.
+
+Change a product’s `stock` field in `config/business.php`:
+
+| Value | What the customer sees |
+| --- | --- |
+| `'in_stock'` | En stock |
+| `'out_of_stock'` | Rupture de stock |
+| `'unknown'` | Disponibilité à confirmer |
+
+For example, to mark a sold-out product:
+
+```php
+'stock' => 'out_of_stock',
+```
+
+Save and run `php artisan config:clear`. Refresh the page to see the new status. Customers who already have the page open need to refresh too. There is no automatic deduction, stock quantity, reservation or inventory connection. Missing or unrecognized values display “Disponibilité à confirmer”. For the combined Gabri Cologne card, confirm individual variants with the customer or create separate cards if their stock differs.
+
+Use `description` for the short card text and `details` for additional verified information. Keep both as plain text: HTML is escaped. `size` is optional. Avoid adding unverified ingredient, usage or benefit claims. The initial detail text uses the visible packaging and label information.
+
+If JavaScript is disabled or the browser cannot open dialogs, “Voir la fiche” expands the additional details directly inside the card.
 
 ## 4. Check the result
 
@@ -92,7 +124,11 @@ The fade is controlled by `.products-backdrop img` in `resources/css/app.css`: `
 - Card HTML: `resources/views/partials/product-card.blade.php`.
 - Product section and loop: `resources/views/sections/products.blade.php`.
 - Carousel behavior: `resources/js/carousels.js`.
+- Popup layout: `resources/views/partials/product-dialog.blade.php`.
+- Opening, populating and closing popups: `resources/js/products.js`.
 - Styling: `resources/css/app.css`.
 - The separate `gallery.blade.php` displays general salon photos, not product cards.
 
 Laravel reads the products array, checks the photo files, and passes the data to Blade. Blade loops over the entries and reuses the same card template. JavaScript adds carousel controls to the native scrollable list. Without JavaScript, the product content and manual scrolling remain available.
+
+Carousel navigation uses native smooth scrolling to exact card positions. Repeated clicks advance from the intended destination; touch or wheel input interrupts the animation. Control updates run at most once per animation frame, and the visible-range announcement waits for scrolling to settle. Reduced-motion preferences are respected.
