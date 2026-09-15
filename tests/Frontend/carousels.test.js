@@ -150,3 +150,16 @@ test('enabling reduced motion finishes an active animation immediately', () => {
     assert.equal(c.track.scrollLeft, 270);
     assert.equal(c.track.lastBehavior, 'instant');
 });
+
+test('tabbing into a card interrupts animation so controls follow the new visible position', () => {
+    const c = carouselFixture({ deferScroll: true });
+    c.next.events.click();
+    c.track.scrollLeft = 120;
+    c.track.events.focusin({ target: {} });
+    assert.equal(c.track.pendingScroll, null);
+    c.track.scrollLeft = 400; // The browser reveals the newly focused card.
+    c.track.events.scroll();
+    c.flush();
+    c.previous.events.click();
+    assert.equal(c.track.pendingScroll, 270);
+});

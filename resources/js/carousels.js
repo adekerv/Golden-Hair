@@ -84,6 +84,9 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
     });
     track.addEventListener('pointerdown', interrupt, { passive: true });
     track.addEventListener('wheel', interrupt, { passive: true });
+    track.addEventListener('focusin', (event) => {
+        if (event.target !== track) interrupt();
+    });
     track.addEventListener('scroll', () => {
         if (controlsFrame === null) {
             controlsFrame = requestAnimationFrame(() => {
