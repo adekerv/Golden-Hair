@@ -14,16 +14,53 @@ class ProductCardsTest extends TestCase
         $this->withoutVite();
     }
 
-    public function test_example_cards_show_editable_fields_without_broken_images(): void
+    public function test_uploaded_products_render_with_unique_photos_and_readable_details(): void
     {
-        $this->get('/')
-            ->assertSee('Produit exemple 01')
-            ->assertSee('Produit exemple 04')
-            ->assertSee('Marque à renseigner')
-            ->assertSee('Prix à renseigner')
-            ->assertSee('Ajoutez ici une courte description')
-            ->assertSee('Photo à venir')
-            ->assertDontSee('src="http://localhost/images/products/produit-01.webp"', false);
+        $products = config('business.products');
+        $this->assertCount(28, $products);
+        $this->assertCount(28, array_unique(array_column(array_column($products, 'photo'), 'src')));
+
+        $response = $this->get('/')->assertOk()
+            ->assertSee('Prix sur demande')
+            ->assertDontSee('Produit exemple')
+            ->assertDontSee('Photo à venir');
+
+        foreach ($products as $product) {
+            $this->assertFileExists(public_path($product['photo']['src']));
+            $this->assertNotFalse(getimagesize(public_path($product['photo']['src'])));
+            $response->assertSee($product['name'])
+                ->assertSee($product['brand'])
+                ->assertSee($product['description'])
+                ->assertSee($product['photo']['alt']);
+        }
+
+        $document = new \DOMDocument;
+        @$document->loadHTML($response->getContent());
+        $images = (new \DOMXPath($document))->query('//*[@id="product-track"]//img');
+        $this->assertCount(28, $images);
+        foreach ($images as $image) {
+            $src = $image->getAttribute('src');
+            $this->assertStringNotContainsString(' ', $src);
+            $this->assertFileExists(public_path(ltrim(rawurldecode(parse_url($src, PHP_URL_PATH)), '/')));
+            $this->assertSame('lazy', $image->getAttribute('loading'));
+        }
+    }
+
+    public function test_shelf_photo_is_rendered_as_a_decorative_background(): void
+    {
+        $this->get('/')->assertOk()
+            ->assertSee('class="products-backdrop" aria-hidden="true"', false)
+            ->assertSee('/images/business/Product-Shelf.jpg" alt=""', false);
+    }
+
+    public function test_missing_shelf_photo_leaves_the_catalogue_usable(): void
+    {
+        config(['business.products_background' => ['src' => 'images/business/missing.jpg']]);
+
+        $this->get('/')->assertOk()
+            ->assertSee('id="product-track"', false)
+            ->assertDontSee('class="products-backdrop"', false)
+            ->assertDontSee('/images/business/missing.jpg', false);
     }
 
     public function test_optional_product_fields_have_readable_fallbacks(): void

@@ -98,7 +98,7 @@ Les proportions des images réservent leur espace pour réduire les déplacement
 
 ## Ajouter un produit
 
-Quatre exemples sont maintenant présents dans `products`. Remplacer leurs valeurs ou dupliquer une entrée pour ajouter une carte :
+Les 28 photos fournies ont maintenant leur carte dans `products`, avec un nom, une marque et une description. Les prix restent « Prix sur demande » en attendant confirmation. Modifier les valeurs ou dupliquer une entrée pour ajouter une carte :
 
 ```php
 'products' => [

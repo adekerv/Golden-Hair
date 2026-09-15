@@ -1,4 +1,9 @@
-<section id="produits" class="bg-sand py-20 lg:py-28" aria-labelledby="products-title">
+<section id="produits" class="products-section bg-sand py-20 lg:py-28" aria-labelledby="products-title">
+    @if($productsBackground)
+        <div class="products-backdrop" aria-hidden="true">
+            <img src="{{ $productsBackground['url'] }}" alt="" width="1280" height="484" loading="lazy" decoding="async">
+        </div>
+    @endif
     <div class="mx-auto max-w-[1440px] px-5 lg:px-16">
         <div class="max-w-3xl">
             <p class="text-sm font-bold uppercase tracking-[.22em] text-wine">Sélection au salon</p>

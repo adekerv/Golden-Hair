@@ -1,6 +1,8 @@
 # Product cards: adding photos and editing the content
 
-Your product carousel contains four example cards. They are examples, not real products or prices. You do not need to edit HTML to replace them or add more cards.
+Your product carousel contains 28 cards using the photos you supplied. Names and short French descriptions follow the visible product labels. Prices display “Prix sur demande” until you confirm them; handwritten prices remain visible in some original photos. You do not need to edit HTML to change the content or add more cards.
+
+The Rosemary & Mint conditioner has separate tube and pot cards. The Gabri Cologne photo shows S1, S2 and S3 together in one card.
 
 ## 1. Put the photo in the correct folder
 
@@ -12,7 +14,7 @@ public/
     products/
 ```
 
-Copy or drag your photo into that folder. For the first example, the configured filename is `produit-01.webp`. The other examples use `produit-02.webp`, `produit-03.webp`, and `produit-04.webp`.
+Copy or drag your photo into that folder. Your current filenames have been retained, including spaces and accents; their URLs are encoded automatically. Copy the filename exactly when filling in `photo.src`. Adding a file alone does not create a card: add its data in the next steps.
 
 You can use your own filenames instead. JPG, JPEG, PNG, WebP and AVIF are supported. Use simple lowercase names with hyphens, such as `shampoing-hydratant.jpg`. Keep the real extension: renaming a JPG to `.webp` does not convert the image. HEIC photos must be exported to a supported format.
 
@@ -27,7 +29,7 @@ Open `config/business.php` and search for `'products' => [`, near the bottom of 
     'name' => 'Nom du produit',
     'brand' => 'Nom de la marque',
     'description' => 'Une courte description et le principal usage du produit.',
-    'price' => 'Prix à renseigner',
+    'price' => 'Prix sur demande',
     'photo' => [
         'src' => 'images/products/shampoing-hydratant.jpg',
         'alt' => 'Flacon du shampoing hydratant, marque et contenance',
@@ -55,7 +57,7 @@ The file on disk is `public/images/products/shampoing-hydratant.jpg`, but the co
 5. Keep the commas between entries. Inside single-quoted PHP text, write an apostrophe as `\'`, for example `'Huile d\'argan'`.
 6. Save, run `php artisan config:clear` and refresh the page.
 
-A fifth entry automatically creates a fifth card. To remove a card, remove its complete array. To reorder cards, move their arrays. An empty products array displays a short availability message without empty carousel controls.
+Each additional entry automatically creates another card. To remove a card, remove its complete array. To reorder cards, move their arrays. An empty products array displays a short availability message without empty carousel controls.
 
 ## 4. Check the result
 
@@ -77,6 +79,12 @@ You do not need to rebuild for product text or photos. If you change styles, Jav
 - For a temporary photo-free card, set `'photo' => null`.
 
 Photos display inside a square area with `object-fit: contain`, so the whole product remains visible. The original file is not cropped or converted. Export reasonably sized images, rather than uploading full-resolution phone originals, to reduce download size. Photos below the hero use lazy loading.
+
+## Shelf background
+
+`public/images/business/Product-Shelf.jpg` appears behind the products section. Its path is set in `config/business.php`, under `products_background`. Set that value to `null` to remove the photo and keep the sand-colored background.
+
+The fade is controlled by `.products-backdrop img` in `resources/css/app.css`: `opacity: .18` means 18% visibility. The cards stay opaque so their labels remain readable. Run `npm run build` after changing this style. The background is decorative and ignored by screen readers. If its file is missing, the section still works.
 
 ## Where the implementation lives
 

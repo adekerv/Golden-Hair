@@ -14,6 +14,7 @@ class HomeController extends Controller
             $business['photos'],
         )));
         $heroPhoto = $this->preparePhoto($business['hero_photo'], 'Le salon '.$business['name']);
+        $productsBackground = $this->preparePhoto($business['products_background'] ?? null, '');
         foreach (['services', 'products'] as $group) {
             foreach ($business[$group] as &$item) {
                 $item['photo'] = $this->preparePhoto($item['photo'] ?? null, $item['name'] ?? 'Photo du produit');
@@ -21,11 +22,11 @@ class HomeController extends Controller
             unset($item);
         }
 
-        return view('pages.home', compact('business', 'photos', 'heroPhoto'));
+        return view('pages.home', compact('business', 'photos', 'heroPhoto', 'productsBackground'));
     }
 
     /**
-     * @return array{src: string, alt: string, caption?: string}|null
+     * @return array{src: string, url: string, alt: string, caption?: string}|null
      */
     private function preparePhoto(mixed $photo, string $fallbackAlt): ?array
     {
@@ -48,6 +49,7 @@ class HomeController extends Controller
 
         $photo['alt'] = is_string($photo['alt'] ?? null) && trim($photo['alt']) !== ''
             ? $photo['alt'] : $fallbackAlt;
+        $photo['url'] = asset(implode('/', array_map('rawurlencode', explode('/', $photo['src']))));
 
         return $photo;
     }
