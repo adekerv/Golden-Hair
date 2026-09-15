@@ -36,10 +36,12 @@ Les fichiers `.env`, `vendor/`, `node_modules/` et `public/build/` ne sont pas v
 
 | Fichier ou dossier | Rôle |
 | --- | --- |
-| `routes/web.php` | Route publique `/`, nommée `home` |
+| `routes/web.php` | Routes publiques `home`, `legal` et `privacy`, sans session |
 | `app/Http/Controllers/Controller.php` | Classe de base des contrôleurs ; aucune authentification |
 | `app/Http/Controllers/HomeController.php` | Charge les informations et vérifie les fichiers photo |
+| `app/Http/Controllers/InformationController.php` | Charge les pages légales et de confidentialité |
 | `config/business.php` | Coordonnées, prestations, 50 tarifs, produits et photos |
+| `config/legal.php` | Identité juridique, hébergement, médiation et confidentialité à compléter |
 | `resources/views/layouts/app.blade.php` | Document HTML, métadonnées, polices et assets Vite |
 | `resources/views/pages/home.blade.php` | Assemble les sections |
 | `resources/views/partials/navigation.blade.php` | Navigation ordinateur et menu mobile |
@@ -47,6 +49,7 @@ Les fichiers `.env`, `vendor/`, `node_modules/` et `public/build/` ne sont pas v
 | `resources/views/partials/footer.blade.php` | Pied de page |
 | `resources/views/sections/` | Hero, coiffures, produits, galerie facultative et contact |
 | `resources/css/app.css` | Thème Tailwind 4 et règles complémentaires |
+| `resources/css/fonts.css` et `resources/fonts/` | Polices locales WOFF2 et leurs licences |
 | `resources/js/navigation.js` | Fermeture du menu, touche Échap, gestion du focus |
 | `resources/js/carousels.js` | Flèches, défilement clavier et état des boutons |
 | `resources/js/app.js` | Point d’entrée JavaScript |
@@ -75,8 +78,9 @@ Modifier `config/business.php`, puis exécuter `php artisan config:clear` si né
 
 - `contact.phone` contient le numéro affiché. Mettre `contact.phone_confirmed` à `true` seulement après confirmation pour afficher le lien d’appel.
 - `contact.address` et `contact.postal_city` contiennent l’adresse. `address_confirmed` retire la mention « à confirmer ».
-- `contact.whatsapp` reste `null` tant qu’aucun numéro WhatsApp n’est validé. Pour l’activer, utiliser le numéro international, par exemple le format `596...`, sans zéro national initial. Le site ouvre WhatsApp ; il n’envoie aucun message automatiquement.
+- `contact.whatsapp` contient le numéro WhatsApp international confirmé. Mettre `null` pour masquer ce moyen de contact. Le site ouvre WhatsApp ; il n’envoie aucun message automatiquement.
 - `contact.email` active un lien email lorsqu’il est renseigné.
+- `contact.instagram` contient l’URL du profil et `contact.instagram_label` son nom affiché.
 - `hours` accepte des entrées `['day' => 'Lundi', 'hours' => '09:00–17:00']`.
 - `price_groups` contient tous les tarifs de la maquette. Les prix des trois cartes dans `services` sont séparés : mettre à jour les deux emplacements si un prix change.
 - `prices_confirmed` contrôle la note générale des prix. Vérifier aussi le libellé « keeneez » et `locks_note`.
@@ -92,7 +96,7 @@ Copier votre fichier WebP, JPG, PNG ou AVIF dans le dossier approprié puis rens
 ],
 ```
 
-Pour remplacer le logo dans la grande carte d’accueil, utiliser le même format dans `hero_photo`. Pour la galerie facultative, ajouter des entrées à `photos`, avec une `caption` facultative. Les chemins commencent par `images/`, sans `public/`.
+La bannière `public/images/business/Facebook banner updated.png` est renseignée dans `hero_photo`. Elle apparaît derrière le texte sur ordinateur, avec un dégradé pour préserver la lisibilité, et sous le texte sur mobile pour garder le visuel entier. Pour la remplacer, modifier `hero_photo`. Pour la galerie facultative, ajouter des entrées à `photos`, avec une `caption` facultative. Les chemins commencent par `images/`, sans `public/`.
 
 Les proportions des images réservent leur espace pour réduire les déplacements de mise en page. Les photos sous l’accueil sont chargées à la demande (`loading="lazy"`). Le CSS recadre les photos de coiffures avec `object-fit: cover` ; les produits utilisent `contain` pour montrer le flacon entier. Les fichiers originaux ne sont pas modifiés.
 
@@ -125,17 +129,22 @@ Chaque entrée de products produit une carte. Une photo manquante affiche « Pho
 - Le script CDN Tailwind compilait dans le navigateur : il est remplacé par les dépendances Tailwind/Vite déjà déclarées dans le projet, avec un build local minifié.
 - Les titres avaient un interligne très serré : il a été augmenté. Les prix et coordonnées peuvent revenir à la ligne ; le menu tient dans les petits écrans.
 - Les textes secondaires ont un contraste plus élevé. Les zones cliquables et le focus clavier sont visibles. La préférence de réduction des animations est respectée.
-- Les deux faux numéros temporaires ont été remplacés par un message explicite. Le numéro réellement fourni reste affiché comme non confirmé.
+- Les coordonnées fournies par le salon sont désormais confirmées : téléphone, WhatsApp, adresse, e-mail et Instagram. Les liens facultatifs sont masqués si leur valeur devient `null`.
+- La piste du carrousel sert de référence aux éléments masqués pour les lecteurs d’écran (`position: relative`). Ceux-ci n’étendent plus la largeur du document. Le bandeau des prestations et les coordonnées reviennent à la ligne sur mobile.
 - L’affirmation « retranscrits depuis l’affiche fournie » a été remplacée : seul le HTML a été reçu dans cette conversation, pas l’affiche originale.
 - Les fichiers CSS/JS de l’ancien design et l’ancienne section d’informations ont été retirés pour garder un seul point d’entrée.
 
 ## Limites et améliorations à prévoir
 
-Les photos du salon et des produits, les références produits, les horaires, la confirmation des coordonnées et des prix, et les contenus juridiques manquent encore. Le footer indique que ces derniers sont en attente ; aucun faux lien n’est créé.
+Les 28 produits, leurs photos, les visuels du salon et les coordonnées fournies sont intégrés. Les horaires et les tarifs restent à confirmer. Le stock est manuel et les prix des produits restent « Prix sur demande ».
 
-Priorités utiles : fournir les vraies photos en WebP/AVIF avec des tailles adaptées ; proposer plusieurs tailles avec `srcset` si les originaux sont lourds ; héberger les deux polices localement pour supprimer la requête Google Fonts ; ajouter un lien d’itinéraire une fois l’adresse confirmée. Les polices utilisent déjà `display=swap` et des polices de secours.
+Les pages légales et de confidentialité s’appuient sur les références officielles liées dans leur contenu, mais restent incomplètes. Dans `config/legal.php`, renseigner l’identité et la forme juridique, l’immatriculation, le directeur de publication, le capital et la TVA si applicables, l’hébergeur et le médiateur auquel le salon est réellement affilié. Renseigner aussi les prestataires, les durées de conservation et les éventuels transferts. Utiliser « Non applicable » uniquement après vérification. Mettre `confirmed` à `true` seulement après avoir complété et validé la notice entière ; cela retire le message provisoire et la directive `noindex`. Mettre à jour `updated_on`.
 
-Le fichier SQLite créé initialement est conservé, mais la page ne l’utilise pas. Les sessions et le cache sont sur fichiers. Laravel Boost est un outil de développement installé selon les instructions du dépôt.
+Les deux polices sont maintenant servies localement par Vite avec `font-display: swap` et des polices de secours. Les pages publiques ne démarrent aucune session et ne déposent pas de cookie. Aucun outil de suivi ni contenu social embarqué n’est intégré. Il faut réexaminer la notice si l’hébergeur ajoute des services ou si le site évolue vers des formulaires, statistiques ou commandes.
+
+Amélioration possible : fournir des versions WebP/AVIF plus légères des grandes photos et plusieurs tailles avec `srcset`. Les fichiers originaux sont conservés.
+
+Aucun fichier SQLite n’est nécessaire. Le cache reste sur fichiers. Laravel Boost est un outil de développement installé selon les instructions du dépôt.
 
 ## Vérifications
 

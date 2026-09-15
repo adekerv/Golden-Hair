@@ -9,7 +9,7 @@
     @endif
     <h3 data-product-title id="product-title-{{ $cardNumber }}" class="mt-2 font-display text-3xl font-semibold">{{ $product['name'] ?? 'Produit à renseigner' }}</h3>
     <p data-product-description class="mt-2 text-charcoal/75">{{ $product['description'] ?? 'Description à renseigner.' }}</p>
-    <p data-product-price class="product-price pt-4 text-lg font-bold text-wine"><span class="sr-only">Prix : </span>{{ ($product['price'] ?? '') !== '' ? $product['price'] : 'Prix à renseigner' }}</p>
+    <p class="product-price pt-4 text-lg font-bold text-wine"><span class="sr-only">Prix : </span><span data-product-price>{{ ($product['price'] ?? '') !== '' ? $product['price'] : 'Prix à renseigner' }}</span></p>
     <p class="mt-3"><span data-product-stock data-stock="{{ $product['availability']['status'] }}" class="stock-badge">{{ $product['availability']['label'] }}</span></p>
     <details class="product-details mt-4 border-t border-charcoal/10 pt-4">
         <summary data-product-open class="product-details-trigger font-bold text-wine">Voir la fiche <span aria-hidden="true">↗</span><span class="sr-only"> : {{ $product['name'] ?? 'Produit à renseigner' }}</span></summary>

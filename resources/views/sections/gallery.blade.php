@@ -5,7 +5,7 @@
             <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach($photos as $photo)
                     <figure class="min-w-0">
-                        <img src="{{ asset($photo['src']) }}" alt="{{ $photo['alt'] }}" width="800" height="1000" loading="lazy" decoding="async" class="aspect-[4/5] w-full rounded-3xl object-cover">
+                        <img src="{{ $photo['url'] }}" alt="{{ $photo['alt'] }}" width="800" height="1000" loading="lazy" decoding="async" class="aspect-[4/5] w-full rounded-3xl object-cover">
                         @if(!empty($photo['caption']))<figcaption class="mt-3 text-charcoal/75">{{ $photo['caption'] }}</figcaption>@endif
                     </figure>
                 @endforeach

@@ -15,7 +15,9 @@ Pour modifier le front-end, lancer `npm run dev` dans un deuxième terminal. Pou
 
 ## Contenu
 
-Modifier `config/business.php` et ajouter les photos dans `public/images/`. Les coordonnées et prix repris de la maquette restent à confirmer.
+Modifier `config/business.php` et ajouter les photos dans `public/images/`. Les coordonnées ont été mises à jour avec les informations du salon. Les horaires et tarifs restent à confirmer.
+
+Les pages `/mentions-legales` et `/confidentialite` sont accessibles depuis le pied de page. Compléter `config/legal.php` avec l’identité de l’exploitant, l’hébergeur, le médiateur et les informations de conservation/transfert des données. Les informations manquantes sont signalées ; ces notices restent à finaliser avant publication.
 
 Voir [le guide DWWM](docs/DWWM.md) pour la structure, les explications du code et l’ajout de photos/produits.
 

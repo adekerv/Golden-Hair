@@ -111,11 +111,19 @@ class LandingPageTest extends TestCase
 
     public function test_unconfirmed_phone_number_has_no_call_link(): void
     {
+        config([
+            'business.contact.phone' => '0596 97 64 78',
+            'business.contact.phone_confirmed' => false,
+            'business.contact.whatsapp' => null,
+            'business.contact.email' => null,
+        ]);
+
         $this->get('/')
             ->assertSee('0596 97 64 78')
             ->assertSee('Le numéro de téléphone est en cours de confirmation.')
             ->assertDontSee('href="tel:', false)
-            ->assertDontSee('href="https://wa.me/', false);
+            ->assertDontSee('href="https://wa.me/', false)
+            ->assertDontSee('href="mailto:', false);
     }
 
     public function test_all_supplied_price_groups_are_rendered(): void

@@ -2,21 +2,27 @@
 
 return [
     'name' => 'GOLDEN HAIR',
-    'description' => 'GOLDEN HAIR — salon de coiffure mixte au Lamentin. Découvrez les coiffures, les tarifs et les informations du salon.',
-    'tagline' => 'Coiffure mixte · Le Lamentin',
+    'description' => 'GOLDEN HAIR — Coiffure • Barber au Lamentin, Martinique. Découvrez nos prestations, produits et coordonnées.',
+    'activity' => 'Coiffure • Barber',
+    'tagline' => 'Coiffure • Barber · Le Lamentin',
     'intro' => 'Coiffures, coupes, soins et entretien des locks pour femmes, hommes et enfants, au cœur du Lamentin.',
     'logo' => 'images/branding/golden-hair-logo.webp',
-    'hero_photo' => null,
+    'hero_photo' => [
+        'src' => 'images/business/Facebook banner updated.png',
+        'alt' => 'Visuel Golden Hair, coiffure et barber au Lamentin',
+    ],
     'photos' => [
     ],
     'contact' => [
         'address' => '22 Place Emile Berlan',
-        'postal_city' => '97232 Le Lamentin',
-        'address_confirmed' => false,
-        'phone' => '0596 97 64 78',
-        'phone_confirmed' => false,
-        'whatsapp' => null,
-        'email' => null,
+        'postal_city' => '97232 LE LAMENTIN, Martinique',
+        'address_confirmed' => true,
+        'phone' => '+596 696 97 64 78',
+        'phone_confirmed' => true,
+        'whatsapp' => '+596 696 18 08 34',
+        'email' => 'goldenhair.martinique@gmail.com',
+        'instagram' => 'https://www.instagram.com/goldenhair.martinique/',
+        'instagram_label' => '@goldenhair.martinique',
     ],
     'hours' => [
     ],

@@ -16,6 +16,9 @@
                 @if($business['contact']['email'])
                     <a href="mailto:{{ $business['contact']['email'] }}" class="contact-button">Écrire au salon</a>
                 @endif
+                @if(!empty($business['contact']['instagram']))
+                    <a href="{{ $business['contact']['instagram'] }}" class="contact-button" rel="noreferrer">Instagram</a>
+                @endif
             </div>
         </div>
         <div class="min-w-0 rounded-[32px] bg-ivory p-7 text-charcoal shadow-2xl lg:p-10">
@@ -30,6 +33,24 @@
                     <div class="border-b border-charcoal/10 pb-6">
                         <p class="text-sm font-bold text-charcoal/75">TÉLÉPHONE @if(!$business['contact']['phone_confirmed']) · À CONFIRMER @endif</p>
                         <p class="mt-2 text-lg font-semibold">{{ $business['contact']['phone'] }}</p>
+                    </div>
+                @endif
+                @if($business['contact']['whatsapp'])
+                    <div class="border-b border-charcoal/10 pb-6">
+                        <p class="text-sm font-bold text-charcoal/75">WHATSAPP</p>
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $business['contact']['whatsapp']) }}" class="contact-detail-link">{{ $business['contact']['whatsapp'] }}</a>
+                    </div>
+                @endif
+                @if($business['contact']['email'])
+                    <div class="border-b border-charcoal/10 pb-6">
+                        <p class="text-sm font-bold text-charcoal/75">E-MAIL</p>
+                        <a href="mailto:{{ $business['contact']['email'] }}" class="contact-detail-link">{{ $business['contact']['email'] }}</a>
+                    </div>
+                @endif
+                @if(!empty($business['contact']['instagram']))
+                    <div class="border-b border-charcoal/10 pb-6">
+                        <p class="text-sm font-bold text-charcoal/75">INSTAGRAM</p>
+                        <a href="{{ $business['contact']['instagram'] }}" class="contact-detail-link" rel="noreferrer">{{ $business['contact']['instagram_label'] }}</a>
                     </div>
                 @endif
                 <div>

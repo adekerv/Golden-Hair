@@ -9,7 +9,7 @@
                 @foreach($business['services'] as $service)
                     <article class="carousel-card overflow-hidden rounded-3xl bg-white shadow-soft">
                         @if($service['photo'])
-                            <img src="{{ asset($service['photo']['src']) }}" alt="{{ $service['photo']['alt'] }}" width="800" height="600" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover">
+                            <img src="{{ $service['photo']['url'] }}" alt="{{ $service['photo']['alt'] }}" width="800" height="600" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover">
                         @else
                             <div class="service-placeholder flex aspect-[4/3] items-center justify-center p-8 text-center">
                                 <div><span class="text-5xl" aria-hidden="true">✦</span><p class="mt-4 text-sm uppercase tracking-[.2em]">{{ $service['category'] }}</p></div>

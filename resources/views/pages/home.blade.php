@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $business['name'].' — Coiffure mixte au Lamentin')
+@section('title', $business['name'].' — Coiffure • Barber au Lamentin')
 
 @section('content')
     @include('sections.hero')
