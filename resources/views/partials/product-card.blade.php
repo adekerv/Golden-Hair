@@ -1,6 +1,6 @@
 <article class="carousel-card product-card rounded-3xl border border-charcoal/10 bg-ivory p-5" aria-labelledby="product-title-{{ $cardNumber }}">
     @if($product['photo'] ?? null)
-        <img src="{{ asset($product['photo']['src']) }}" alt="{{ $product['photo']['alt'] }}" width="700" height="700" loading="lazy" decoding="async" class="aspect-square w-full rounded-2xl bg-white object-contain">
+        <img src="{{ $product['photo']['url'] }}" alt="{{ $product['photo']['alt'] }}" width="700" height="700" loading="lazy" decoding="async" class="aspect-square w-full rounded-2xl bg-white object-contain">
     @else
         <div class="product-placeholder"><span class="text-base">Photo à venir</span></div>
     @endif
