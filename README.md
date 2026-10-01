@@ -7,9 +7,9 @@
 [![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Vite 8](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vite.dev)
 
-## Overview
+## Aperçu
 
-Golden Hair is a single-page Laravel application presenting the salon's services, hairstyles, product catalog, photo gallery, prices and contact information. All content is driven by configuration files — no database or user accounts required.
+Golden Hair est une landing page pour un salon de coiffure, présentant les prestations du salon, les coiffures, le catalogue de produits, la galerie photo, les tarifs et les coordonnées. Tout le contenu est piloté par des fichiers de configuration — sans base de données ni comptes utilisateurs.
 
 ## Features
 
