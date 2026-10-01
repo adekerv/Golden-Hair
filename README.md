@@ -1,6 +1,6 @@
 # Golden Hair
 
-> A modern, fast showcase website for **Golden Hair** — hair salon & barbershop in Le Lamentin, Martinique.
+> Une landing page moderne et rapide pour **Golden Hair** — salon de coiffure & barber au Lamentin, Martinique.
 
 [![Laravel 13](https://img.shields.io/badge/Laravel-13-FF2D20?logo=laravel&logoColor=white)](https://laravel.com)
 [![PHP 8.3](https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white)](https://www.php.net)
@@ -11,28 +11,28 @@
 
 Golden Hair est une landing page pour un salon de coiffure, présentant les prestations du salon, les coiffures, le catalogue de produits, la galerie photo, les tarifs et les coordonnées. Tout le contenu est piloté par des fichiers de configuration — sans base de données ni comptes utilisateurs.
 
-## Features
+## Fonctionnalités
 
-- **Landing page** — hero, services, gallery and contact sections
-- **Product catalog** — 28 product cards with detail dialogs
-- **Price list** — full salon pricing grouped by category
-- **Legal pages** — `/mentions-legales` and `/confidentialite`
-- **Config-driven content** — update texts, prices and photos without touching code
-- **Responsive design** built with Tailwind CSS 4
-- **Tested** — PHP feature tests and JavaScript unit tests
+- **Landing page** — sections hero, prestations, galerie et contact
+- **Catalogue de produits** — 28 fiches produits avec fenêtres de détail
+- **Grille tarifaire** — tous les tarifs du salon, regroupés par catégorie
+- **Pages légales** — `/mentions-legales` et `/confidentialite`
+- **Contenu piloté par configuration** — modifiez textes, tarifs et photos sans toucher au code
+- **Design responsive** construit avec Tailwind CSS 4
+- **Testé** — tests fonctionnels PHP et tests unitaires JavaScript
 
-## Tech stack
+## Stack technique
 
-| Layer      | Technology                         |
-|------------|------------------------------------|
-| Backend    | Laravel 13 · PHP 8.3+              |
-| Frontend   | Blade · Tailwind CSS 4 · Vite 8    |
-| Testing    | PHPUnit 12 · JavaScript unit tests |
-| Code style | Laravel Pint                       |
+| Couche        | Technologie                         |
+|---------------|-------------------------------------|
+| Backend       | Laravel 13 · PHP 8.3+               |
+| Frontend      | Blade · Tailwind CSS 4 · Vite 8     |
+| Tests         | PHPUnit 12 · tests unitaires JS     |
+| Style de code | Laravel Pint                        |
 
-## Getting started
+## Démarrage
 
-### Prerequisites
+### Prérequis
 
 - PHP 8.3+
 - Composer
@@ -44,56 +44,56 @@ Golden Hair est une landing page pour un salon de coiffure, présentant les pres
 composer run setup
 ```
 
-This installs PHP and JavaScript dependencies, copies `.env`, generates the application key and builds the frontend assets.
+Cette commande installe les dépendances PHP et JavaScript, copie le fichier `.env`, génère la clé d'application et compile les assets du frontend.
 
-### Run locally
+### Lancer en local
 
 ```sh
 php artisan serve
 ```
 
-For frontend development, start the Vite dev server in a second terminal:
+Pour le développement frontend, lancez le serveur de développement Vite dans un second terminal :
 
 ```sh
 npm run dev
 ```
 
-### Production build
+### Build de production
 
 ```sh
 npm run build
 ```
 
-## Testing
+## Tests
 
 ```sh
 php artisan test
 ```
 
-JavaScript unit tests live in `tests/Frontend/`.
+Les tests unitaires JavaScript se trouvent dans `tests/Frontend/`.
 
-## Project structure
+## Structure du projet
 
 ```
-app/Http/Controllers   # Page controllers
-config/business.php    # Salon info, services, prices, products
-config/legal.php       # Legal notice content
-resources/views        # Blade templates (layouts, pages, sections, partials)
-routes/web.php         # Routes (home + legal pages)
-tests/Feature          # PHP feature tests
-tests/Frontend         # JavaScript unit tests
-docs/                  # DWWM documentation
+app/Http/Controllers   # Contrôleurs des pages
+config/business.php    # Infos du salon, prestations, tarifs, produits
+config/legal.php       # Contenu des mentions légales
+resources/views        # Templates Blade (layouts, pages, sections, partials)
+routes/web.php         # Routes (accueil + pages légales)
+tests/Feature          # Tests fonctionnels PHP
+tests/Frontend         # Tests unitaires JavaScript
+docs/                  # Documentation DWWM
 ```
 
-## Customizing content
+## Personnaliser le contenu
 
-Everything visible on the site is configured in `config/business.php`: salon name, tagline, contact details, opening hours, services, price groups and product catalog entries. Photos go in `public/images/`. Legal notices are configured in `config/legal.php` and rendered at `/mentions-legales` and `/confidentialite`.
+Tout ce qui est visible sur le site est configuré dans `config/business.php` : nom du salon, slogan, coordonnées, horaires d'ouverture, prestations, grilles tarifaires et catalogue de produits. Les photos vont dans `public/images/`. Les mentions légales sont configurées dans `config/legal.php` et affichées sur `/mentions-legales` et `/confidentialite`.
 
 ## Documentation
 
-- [DWWM guide](docs/DWWM.md) — project structure, code walkthrough, adding photos & products
-- [Dossier Professionnel](docs/DOSSIER_PROFESSIONNEL_GOLDEN_HAIR.md) — internship report (French)
+- [Guide DWWM](docs/DWWM.md) — structure du projet, explication du code, ajout de photos & produits
+- [Dossier Professionnel](docs/DOSSIER_PROFESSIONNEL_GOLDEN_HAIR.md) — rapport de stage (français)
 
-## License
+## Licence
 
 MIT
