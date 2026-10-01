@@ -93,7 +93,3 @@ Tout ce qui est visible sur le site est configuré dans `config/business.php` : 
 
 - [Guide DWWM](docs/DWWM.md) — structure du projet, explication du code, ajout de photos & produits
 - [Dossier Professionnel](docs/DOSSIER_PROFESSIONNEL_GOLDEN_HAIR.md) — rapport de stage (français)
-
-## Licence
-
-MIT
