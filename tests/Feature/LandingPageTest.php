@@ -126,6 +126,50 @@ class LandingPageTest extends TestCase
             ->assertDontSee('href="mailto:', false);
     }
 
+    public function test_hairstyle_gallery_groups_all_twelve_photos_into_ten_styles(): void
+    {
+        $response = $this->get('/')->assertOk();
+        $business = $response->viewData('business');
+
+        $this->assertCount(10, $business['services']);
+        $photoCount = 0;
+        foreach ($business['services'] as $service) {
+            $this->assertNotNull($service['photo']);
+            foreach ($service['style_photos'] as $photo) {
+                $this->assertFileExists(public_path($photo['src']));
+                $this->assertNotEmpty($photo['alt']);
+                $photoCount++;
+            }
+        }
+        $this->assertSame(12, $photoCount);
+        $response->assertSee('Tresses plaquées avec dégradé')
+            ->assertSee('Boucles bordeaux')
+            ->assertSee('Microtresses, pas à pas')
+            ->assertSee('Vue 2')
+            ->assertSee('Consulter la liste complète des tarifs');
+    }
+
+    public function test_hairstyle_gallery_uses_a_valid_alternate_when_the_main_photo_is_missing(): void
+    {
+        $alternate = config('business.services.0.alternate_photos.0');
+        config([
+            'business.services.0.photo' => ['src' => 'images/services/missing-main.jpg'],
+            'business.services.0.alternate_photos' => [
+                ['src' => '../private.jpg'],
+                ['src' => 'images/services/missing-alternate.jpg'],
+                $alternate,
+            ],
+        ]);
+
+        $response = $this->get('/')->assertOk();
+        $service = $response->viewData('business')['services'][0];
+        $this->assertCount(1, $service['style_photos']);
+        $this->assertSame($alternate['src'], $service['photo']['src']);
+        $response->assertDontSee('missing-main.jpg')
+            ->assertDontSee('missing-alternate.jpg')
+            ->assertDontSee('../private.jpg');
+    }
+
     public function test_all_supplied_price_groups_are_rendered(): void
     {
         $this->get('/')

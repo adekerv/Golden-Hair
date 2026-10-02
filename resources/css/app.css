@@ -118,3 +118,11 @@
 .information-page li + li { margin-top: .75rem; }
 .information-sources { font-size: .875rem; }
 @media (min-width: 40rem) { .information-page { padding-inline: 2.5rem; } .information-facts > div { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 1rem; } }
+
+.hairstyle-card { display: flex; flex-direction: column; }
+.hairstyle-card h3 { min-height: 2.5em; }
+.hairstyle-views { position: absolute; bottom: 1rem; left: 1rem; display: flex; gap: .25rem; padding: .25rem; border: 1px solid rgb(255 255 255 / 50%); border-radius: 999px; background: var(--color-ivory); box-shadow: 0 4px 16px rgb(0 0 0 / 12%); }
+.hairstyle-views a { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; min-width: 3.5rem; padding: .5rem .85rem; border-radius: 999px; color: var(--color-charcoal); font-size: .75rem; font-weight: 700; }
+.hairstyle-views a[aria-current="true"] { background: var(--color-charcoal); color: var(--color-ivory); }
+.hairstyle-contact { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.75rem; border-top: 1px solid rgb(24 32 29 / 12%); padding-top: 1rem; color: var(--color-wine); font-size: .875rem; font-weight: 700; }
+.hairstyle-contact:hover { text-decoration: underline; text-underline-offset: .25rem; }

@@ -18,6 +18,14 @@ class HomeController extends Controller
         foreach (['services', 'products'] as $group) {
             foreach ($business[$group] as &$item) {
                 $item['photo'] = $this->preparePhoto($item['photo'] ?? null, $item['name'] ?? 'Photo du produit');
+                if ($group === 'services') {
+                    $alternatePhotos = array_map(
+                        fn (mixed $photo): ?array => $this->preparePhoto($photo, $item['name']),
+                        $item['alternate_photos'] ?? [],
+                    );
+                    $item['style_photos'] = array_values(array_filter([$item['photo'], ...$alternatePhotos]));
+                    $item['photo'] = $item['style_photos'][0] ?? null;
+                }
                 if ($group === 'products') {
                     $item['availability'] = match ($item['stock'] ?? null) {
                         'in_stock' => ['status' => 'in_stock', 'label' => 'En stock'],
