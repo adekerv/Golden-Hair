@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "build:vercel": "npm run build && APP_ENV=production APP_DEBUG=false php artisan site:export"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
