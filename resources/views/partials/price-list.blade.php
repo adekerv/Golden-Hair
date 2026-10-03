@@ -3,6 +3,10 @@
         <span>Consulter la liste complète des tarifs</span>
         <span class="price-toggle flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink" aria-hidden="true">+</span>
     </summary>
+    @php($hasPriceVariants = collect($business['price_groups'])->flatMap(fn ($group) => $group['items'])->contains(fn ($item) => str_contains($item['price'], '/')))
+    @if($hasPriceVariants && !empty($business['price_variants_note']))
+        <p class="mt-6 rounded-2xl border border-ink/10 bg-card px-5 py-4 text-sm leading-6">{{ $business['price_variants_note'] }}</p>
+    @endif
     <div class="mt-8 grid gap-8 border-t border-ink/10 pt-8 lg:grid-cols-3">
         @foreach($business['price_groups'] as $group)
             <div class="min-w-0">

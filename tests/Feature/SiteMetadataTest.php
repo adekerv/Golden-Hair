@@ -91,6 +91,32 @@ class SiteMetadataTest extends TestCase
         $this->assertArrayNotHasKey('address', $this->structuredData($this->get('/')->getContent()));
     }
 
+    public function test_structured_data_groups_opening_hours_by_schedule(): void
+    {
+        $data = $this->structuredData($this->get('/')->getContent());
+
+        $this->assertSame([[
+            '@type' => 'OpeningHoursSpecification',
+            'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            'opens' => '08:30',
+            'closes' => '17:00',
+        ]], $data['openingHoursSpecification']);
+
+        config(['business.hours' => [
+            ['day' => 'Lundi', 'hours' => '9h – 12h', 'schema_day' => 'Monday', 'opens' => '09:00', 'closes' => '12:00'],
+            ['day' => 'Mardi', 'hours' => '9h – 17h', 'schema_day' => 'Tuesday', 'opens' => '09:00', 'closes' => '17:00'],
+            ['day' => 'Mercredi', 'hours' => '9h – 12h', 'schema_day' => 'Wednesday', 'opens' => '09:00', 'closes' => '12:00'],
+            ['day' => 'Dimanche', 'hours' => 'Fermé'],
+        ]]);
+        $specifications = $this->structuredData($this->get('/')->getContent())['openingHoursSpecification'];
+
+        $this->assertSame(['Monday', 'Wednesday'], $specifications[0]['dayOfWeek']);
+        $this->assertSame(['Tuesday'], $specifications[1]['dayOfWeek']);
+
+        config(['business.hours' => []]);
+        $this->assertArrayNotHasKey('openingHoursSpecification', $this->structuredData($this->get('/')->getContent()));
+    }
+
     public function test_structured_data_cannot_close_its_script_element(): void
     {
         config(['business.description' => '</script><img src=x onerror=alert(1)>']);

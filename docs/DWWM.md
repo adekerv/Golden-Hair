@@ -81,7 +81,8 @@ Modifier `config/business.php`, puis exécuter `php artisan config:clear` si né
 - `contact.whatsapp` contient le numéro WhatsApp international confirmé. Mettre `null` pour masquer ce moyen de contact. Le site ouvre WhatsApp ; il n’envoie aucun message automatiquement.
 - `contact.email` active un lien email lorsqu’il est renseigné.
 - `contact.instagram` contient l’URL du profil et `contact.instagram_label` son nom affiché.
-- `hours` accepte des entrées `['day' => 'Lundi', 'hours' => '09:00–17:00']`.
+- `hours` accepte des entrées `['day' => 'Lundi', 'hours' => '8h30 – 17h00']` ; un jour fermé s’écrit `['day' => 'Dimanche', 'hours' => 'Fermé']`. Pour les jours ouverts, `schema_day` (nom anglais du jour), `opens` et `closes` (`08:30`) alimentent les données structurées lues par Google. `hours_summary` est la phrase affichée dans l’en-tête de la page d’accueil.
+- `price_variants_note` explique les prix multiples (`65 / 75 / 85 €`), qui dépendent de la quantité de cheveux ; elle ne s’affiche que si un tarif contient « / ».
 - `price_groups` contient tous les tarifs de la maquette. Les prix des trois cartes dans `services` sont séparés : mettre à jour les deux emplacements si un prix change.
 - `prices_confirmed` contrôle la note générale des prix. Vérifier aussi le libellé « keeneez » et `locks_note`.
 

@@ -81,6 +81,26 @@ class HomeController extends Controller
             $data['email'] = $contact['email'];
         }
 
+        $specifications = [];
+        foreach ($business['hours'] as $opening) {
+            if (! isset($opening['schema_day'], $opening['opens'], $opening['closes'])) {
+                continue;
+            }
+
+            $key = $opening['opens'].'-'.$opening['closes'];
+            $specifications[$key] ??= [
+                '@type' => 'OpeningHoursSpecification',
+                'dayOfWeek' => [],
+                'opens' => $opening['opens'],
+                'closes' => $opening['closes'],
+            ];
+            $specifications[$key]['dayOfWeek'][] = $opening['schema_day'];
+        }
+
+        if ($specifications !== []) {
+            $data['openingHoursSpecification'] = array_values($specifications);
+        }
+
         if (! empty($contact['instagram'])) {
             $data['sameAs'] = [$contact['instagram']];
         }

@@ -65,6 +65,34 @@ class LandingPageTest extends TestCase
             ->assertDontSee('<script>alert(1)</script>', false);
     }
 
+    public function test_opening_hours_are_listed_and_summarised_in_the_hero(): void
+    {
+        $response = $this->get('/')
+            ->assertOk()
+            ->assertSee('Du lundi au samedi · 8h30 – 17h00')
+            ->assertDontSee('À confirmer auprès du salon');
+
+        $hours = collect($response->viewData('business')['hours']);
+        $this->assertSame(['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'], $hours->pluck('day')->all());
+        $this->assertSame(['8h30 – 17h00'], $hours->take(6)->pluck('hours')->unique()->values()->all());
+        $this->assertSame('Fermé', $hours->last()['hours']);
+    }
+
+    public function test_hours_fall_back_to_a_notice_when_not_configured(): void
+    {
+        config(['business.hours' => [], 'business.hours_summary' => null]);
+
+        $this->get('/')->assertSee('À confirmer auprès du salon')->assertDontSee('Du lundi au samedi');
+    }
+
+    public function test_price_list_explains_prices_that_depend_on_the_amount_of_hair(): void
+    {
+        $this->get('/')->assertSee('le tarif dépend de la quantité de cheveux');
+
+        config(['business.price_groups' => [['title' => 'Coupes', 'items' => [['name' => 'Coupe', 'price' => '20 €']]]]]);
+        $this->get('/')->assertDontSee('le tarif dépend de la quantité de cheveux');
+    }
+
     public function test_photos_render_with_alt_text_and_missing_files_are_omitted(): void
     {
         $public = storage_path('framework/testing/landing-'.uniqid());

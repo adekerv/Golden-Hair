@@ -26,7 +26,15 @@ return [
         'instagram' => 'https://www.instagram.com/goldenhair.martinique/',
         'instagram_label' => '@goldenhair.martinique',
     ],
+    'hours_summary' => 'Du lundi au samedi · 8h30 – 17h00',
     'hours' => [
+        ['day' => 'Lundi', 'hours' => '8h30 – 17h00', 'schema_day' => 'Monday', 'opens' => '08:30', 'closes' => '17:00'],
+        ['day' => 'Mardi', 'hours' => '8h30 – 17h00', 'schema_day' => 'Tuesday', 'opens' => '08:30', 'closes' => '17:00'],
+        ['day' => 'Mercredi', 'hours' => '8h30 – 17h00', 'schema_day' => 'Wednesday', 'opens' => '08:30', 'closes' => '17:00'],
+        ['day' => 'Jeudi', 'hours' => '8h30 – 17h00', 'schema_day' => 'Thursday', 'opens' => '08:30', 'closes' => '17:00'],
+        ['day' => 'Vendredi', 'hours' => '8h30 – 17h00', 'schema_day' => 'Friday', 'opens' => '08:30', 'closes' => '17:00'],
+        ['day' => 'Samedi', 'hours' => '8h30 – 17h00', 'schema_day' => 'Saturday', 'opens' => '08:30', 'closes' => '17:00'],
+        ['day' => 'Dimanche', 'hours' => 'Fermé'],
     ],
     'services' => [
         [
@@ -309,6 +317,7 @@ return [
             ],
         ],
     ],
+    'price_variants_note' => 'Lorsque plusieurs prix sont indiqués (par exemple 65 / 75 / 85 €), le tarif dépend de la quantité de cheveux.',
     'prices_confirmed' => false,
     'prices_note' => 'Tarifs indicatifs : contactez le salon pour confirmer le prix de votre prestation.',
     'locks_note' => '* Libellé à confirmer auprès du salon.',

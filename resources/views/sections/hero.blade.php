@@ -12,6 +12,9 @@
                 <a href="#contact" class="button-secondary">Prendre contact</a>
             </div>
             <p class="mt-8 text-sm leading-6 text-ivory/85">{{ $business['contact']['address'] }}<br>{{ $business['contact']['postal_city'] }}</p>
+            @if(!empty($business['hours_summary']))
+                <p class="mt-2 text-sm font-semibold leading-6 text-gold-soft">{{ $business['hours_summary'] }}</p>
+            @endif
         </div>
     </div>
     <div class="hero-scene {{ $heroPhoto ? '' : 'hero-scene-placeholder' }}">
