@@ -1,0 +1,8 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "framework": null,
+    "installCommand": "echo 'Nothing to install: dist is generated locally by npm run build:static'",
+    "buildCommand": "echo 'Nothing to build: dist is generated locally by npm run build:static'",
+    "outputDirectory": "dist",
+    "cleanUrls": true
+}

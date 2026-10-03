@@ -37,7 +37,7 @@ class StaticExportTest extends TestCase
         $output = $this->temporary.'/output';
         $this->artisan('site:export', ['--output' => $output])->assertSuccessful();
 
-        $home = File::get($output.'/static/index.html');
+        $home = File::get($output.'/index.html');
         $this->assertStringContainsString('Tresses plaquées avec dégradé', $home);
         $this->assertStringContainsString('href="/mentions-legales"', $home);
         $this->assertStringContainsString('href="/#coiffures"', $home);
@@ -45,16 +45,26 @@ class StaticExportTest extends TestCase
         $this->assertStringNotContainsString('http://localhost', $home);
         $this->assertStringNotContainsString('browser-logs', $home);
         foreach (['mentions-legales.html', 'confidentialite.html', '404.html', 'images/photo.jpg', 'build/app.js', 'robots.txt'] as $file) {
-            $this->assertFileExists($output.'/static/'.$file);
+            $this->assertFileExists($output.'/'.$file);
         }
         foreach (['.env', 'images/private.php', 'build/app.js.map', 'build/manifest.json'] as $file) {
-            $this->assertFileDoesNotExist($output.'/static/'.$file);
+            $this->assertFileDoesNotExist($output.'/'.$file);
         }
-        $this->assertSame(3, json_decode(File::get($output.'/config.json'), true)['version']);
 
-        File::put($output.'/static/obsolete.html', 'Old generated content');
+        File::put($output.'/obsolete.html', 'Old generated content');
         $this->artisan('site:export', ['--output' => $output])->assertSuccessful();
-        $this->assertFileDoesNotExist($output.'/static/obsolete.html');
+        $this->assertFileDoesNotExist($output.'/obsolete.html');
+    }
+
+    public function test_vercel_serves_the_default_export_directory_without_a_build(): void
+    {
+        $config = json_decode(File::get(base_path('vercel.json')), true, flags: JSON_THROW_ON_ERROR);
+
+        $this->assertSame('dist', $config['outputDirectory']);
+        $this->assertTrue($config['cleanUrls']);
+        $this->assertNull($config['framework']);
+        $this->assertStringStartsWith('echo ', $config['buildCommand']);
+        $this->assertStringStartsWith('echo ', $config['installCommand']);
     }
 
     public function test_export_refuses_to_replace_an_unrelated_directory(): void
