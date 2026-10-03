@@ -2,6 +2,7 @@
 
 @section('title', 'Mentions légales — '.$business['name'])
 @section('description', 'Éditeur, hébergement et informations légales du site Golden Hair au Lamentin.')
+@section('path', '/mentions-legales')
 @section('robots')
     @if(!$legal['confirmed'])<meta name="robots" content="noindex, follow">@endif
 @endsection

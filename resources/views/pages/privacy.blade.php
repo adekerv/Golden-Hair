@@ -2,6 +2,7 @@
 
 @section('title', 'Confidentialité — '.$business['name'])
 @section('description', 'Données personnelles, navigation et contacts : la confidentialité sur le site Golden Hair.')
+@section('path', '/confidentialite')
 @section('robots')
     @if(!$legal['confirmed'])<meta name="robots" content="noindex, follow">@endif
 @endsection

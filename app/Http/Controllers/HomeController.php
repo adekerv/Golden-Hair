@@ -37,7 +37,55 @@ class HomeController extends Controller
             unset($item);
         }
 
-        return view('pages.home', compact('business', 'photos', 'heroPhoto', 'productsBackground'));
+        $structuredData = $this->structuredData($business);
+
+        return view('pages.home', compact('business', 'photos', 'heroPhoto', 'productsBackground', 'structuredData'));
+    }
+
+    /**
+     * Schema.org description of the salon, limited to details marked as confirmed.
+     *
+     * @param  array<string, mixed>  $business
+     */
+    private function structuredData(array $business): string
+    {
+        $contact = $business['contact'];
+        $siteUrl = rtrim((string) ($business['site_url'] ?? ''), '/');
+        $data = [
+            '@context' => 'https://schema.org',
+            '@type' => 'HairSalon',
+            'name' => $business['name'],
+            'description' => $business['description'],
+        ];
+
+        if ($siteUrl !== '') {
+            $data['url'] = $siteUrl.'/';
+            $data['image'] = $siteUrl.'/'.$business['share_image'];
+            $data['logo'] = $siteUrl.'/'.$business['logo'];
+        }
+
+        if ($contact['address_confirmed'] && $contact['address']) {
+            $data['address'] = ['@type' => 'PostalAddress', 'streetAddress' => $contact['address'], 'addressCountry' => 'MQ'];
+
+            if (preg_match('/^(\d{5})\s+([^,]+)/u', (string) $contact['postal_city'], $place)) {
+                $data['address']['postalCode'] = $place[1];
+                $data['address']['addressLocality'] = mb_convert_case($place[2], MB_CASE_TITLE, 'UTF-8');
+            }
+        }
+
+        if ($contact['phone_confirmed'] && $contact['phone']) {
+            $data['telephone'] = $contact['phone'];
+        }
+
+        if ($contact['email']) {
+            $data['email'] = $contact['email'];
+        }
+
+        if (! empty($contact['instagram'])) {
+            $data['sameAs'] = [$contact['instagram']];
+        }
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_THROW_ON_ERROR);
     }
 
     /**

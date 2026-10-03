@@ -7,8 +7,10 @@ return [
     'tagline' => 'Coiffure • Barber · Le Lamentin',
     'intro' => 'Coiffures, coupes, soins et entretien des locks pour femmes, hommes et enfants, au cœur du Lamentin.',
     'logo' => 'images/branding/golden-hair-logo.webp',
+    'site_url' => env('SITE_URL'),
+    'share_image' => 'images/branding/og-image.jpg',
     'hero_photo' => [
-        'src' => 'images/business/Facebook banner updated.png',
+        'src' => 'images/business/salon-banner.webp',
         'alt' => 'Visuel Golden Hair, coiffure et barber au Lamentin',
     ],
     'photos' => [
@@ -308,7 +310,7 @@ return [
         ],
     ],
     'prices_confirmed' => false,
-    'prices_note' => 'Tarifs repris de la maquette fournie, à confirmer auprès du salon.',
+    'prices_note' => 'Tarifs indicatifs : contactez le salon pour confirmer le prix de votre prestation.',
     'locks_note' => '* Libellé à confirmer auprès du salon.',
     'products_background' => [
         'src' => 'images/business/Product-Shelf.jpg',
