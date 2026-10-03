@@ -5,13 +5,11 @@
 @theme {
     --color-charcoal: #18201d;
     --color-ivory: #fbf7f0;
-    --color-sand: #eee5d8;
     --color-gold: #d9bb76;
     --color-wine: #922c3f;
     --color-gold-soft: #ecd7a0;
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-sans: 'DM Sans', Arial, sans-serif;
-    --shadow-soft: 0 20px 55px rgb(32 38 36 / 10%);
 }
 
 @theme inline {
