@@ -1,6 +1,7 @@
-@import 'tailwindcss';
+@import 'tailwindcss' source(none);
 @import './fonts.css';
 @source '../views/**/*.blade.php';
+@source '../js/**/*.js';
 
 @theme {
     --color-charcoal: #18201d;

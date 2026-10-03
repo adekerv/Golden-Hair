@@ -67,6 +67,15 @@ class StaticExportTest extends TestCase
         $this->assertStringStartsWith('echo ', $config['installCommand']);
     }
 
+    public function test_tailwind_only_scans_views_and_scripts_so_builds_do_not_depend_on_the_export(): void
+    {
+        $css = File::get(resource_path('css/app.css'));
+
+        $this->assertStringContainsString("@import 'tailwindcss' source(none);", $css);
+        $this->assertStringContainsString("@source '../views/**/*.blade.php';", $css);
+        $this->assertStringContainsString("@source '../js/**/*.js';", $css);
+    }
+
     public function test_check_passes_for_a_current_export_and_never_writes(): void
     {
         $output = $this->temporary.'/output';
