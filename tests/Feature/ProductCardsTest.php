@@ -57,7 +57,7 @@ class ProductCardsTest extends TestCase
     {
         $this->get('/')->assertOk()
             ->assertSee('class="products-backdrop" aria-hidden="true"', false)
-            ->assertSee('/images/business/Product-Shelf.jpg" alt=""', false);
+            ->assertSee('/images/business/product-shelf.jpg" alt=""', false);
     }
 
     public function test_missing_shelf_photo_leaves_the_catalogue_usable(): void

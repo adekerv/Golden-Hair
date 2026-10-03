@@ -322,7 +322,7 @@ return [
     'prices_note' => 'Tarifs indicatifs : contactez le salon pour confirmer le prix de votre prestation.',
     'locks_note' => '* Libellé à confirmer auprès du salon.',
     'products_background' => [
-        'src' => 'images/business/Product-Shelf.jpg',
+        'src' => 'images/business/product-shelf.jpg',
     ],
     'products' => [
         [
@@ -334,7 +334,7 @@ return [
             'details' => 'La gamme Natural Hair Almond & Avocado associe amande et avocat dans cette mousse pour boucles. Le flacon pompe permet de distribuer la mousse.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/Design Essentials Almond & Avocado Curl Enhancing Mousse.jpg',
+                'src' => 'images/products/design-essentials-almond-avocado-curl-enhancing-mousse.jpg',
                 'alt' => 'Design Essentials — Almond & Avocado Curl Enhancing Mousse',
             ],
         ],
@@ -347,7 +347,7 @@ return [
             'details' => 'Ce custard au miel fait partie de la gamme Almond & Avocado. Sa texture crème se présente en pot pour accompagner la mise en forme des boucles.',
             'size' => '354 g',
             'photo' => [
-                'src' => 'images/products/Design Essentials Almond & Avocado Honey Curl Forming Custard.jpg',
+                'src' => 'images/products/design-essentials-almond-avocado-honey-curl-forming-custard.jpg',
                 'alt' => 'Design Essentials — Almond & Avocado Honey Curl Forming Custard',
             ],
         ],
@@ -360,7 +360,7 @@ return [
             'details' => 'Ce shampoing de la gamme Almond & Avocado porte les mentions Moisturizing & Detangling et Sulfate-Free sur son flacon. Il réunit lavage, hydratation et démêlage dans la même étape.',
             'size' => '350 ml',
             'photo' => [
-                'src' => 'images/products/Design Essentials Almond & Avocado Sulfate-Free Shampoo.jpg',
+                'src' => 'images/products/design-essentials-almond-avocado-sulfate-free-shampoo.jpg',
                 'alt' => 'Design Essentials — Almond & Avocado Sulfate-Free Shampoo',
             ],
         ],
@@ -373,7 +373,7 @@ return [
             'details' => 'Ce spray de la gamme Coconut & Monoi est présenté en flacon vaporisateur. Il complète la routine des cheveux bouclés entre deux coiffages.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/Design Essentials Coconut & Monoi Coconut Water Curl Refresher.jpg',
+                'src' => 'images/products/design-essentials-coconut-monoi-coconut-water-curl-refresher.jpg',
                 'alt' => 'Design Essentials — Coconut & Monoi Curl Refresher',
             ],
         ],
@@ -386,7 +386,7 @@ return [
             'details' => 'Formations est un finishing spritz : un spray destiné à la finition de la coiffure. Présentation en flacon vaporisateur.',
             'size' => '237 ml',
             'photo' => [
-                'src' => 'images/products/Design Essentials Formations Finishing Spritz.jpg',
+                'src' => 'images/products/design-essentials-formations-finishing-spritz.jpg',
                 'alt' => 'Design Essentials — Formations Finishing Spritz',
             ],
         ],
@@ -399,7 +399,7 @@ return [
             'details' => 'Cette crème de la gamme Natural Hair Almond & Avocado est présentée en pot. Demandez conseil au salon pour choisir entre crème, mousse et custard selon votre coiffure.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/Design Essentials Natural Almond & Avocado Curling Crème.jpg',
+                'src' => 'images/products/design-essentials-natural-almond-avocado-curling-creme.jpg',
                 'alt' => 'Design Essentials — Almond & Avocado Curling Crème',
             ],
         ],
@@ -412,7 +412,7 @@ return [
             'details' => 'Le soin porte le nom Rosemary & Mint Stimulating Super Moisturizing Conditioner. Cette fiche correspond au format tube ; le format pot possède sa propre fiche.',
             'size' => '170 g',
             'photo' => [
-                'src' => 'images/products/Design Essentials Rosemary & Mint Moisturizing Conditioner.jpg',
+                'src' => 'images/products/design-essentials-rosemary-mint-moisturizing-conditioner.jpg',
                 'alt' => 'Design Essentials — Rosemary & Mint Conditioner — tube',
             ],
         ],
@@ -425,7 +425,7 @@ return [
             'details' => 'Le soin porte le nom Rosemary & Mint Stimulating Super Moisturizing Conditioner. Cette fiche correspond au format pot ; le format tube possède sa propre fiche.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/Design Essentials Rosemary & Mint Super Moisturizing Conditioner.jpg',
+                'src' => 'images/products/design-essentials-rosemary-mint-super-moisturizing-conditioner.jpg',
                 'alt' => 'Design Essentials — Rosemary & Mint Conditioner — pot',
             ],
         ],
@@ -438,7 +438,7 @@ return [
             'details' => 'Gel de la gamme professionnelle Gabri, portant la mention Keratin. Il est présenté en pot pour le coiffage des cheveux.',
             'size' => '250 ml',
             'photo' => [
-                'src' => 'images/products/Gabri Professional Keratin Hair Gel.jpg',
+                'src' => 'images/products/gabri-professional-keratin-hair-gel.jpg',
                 'alt' => 'Gabri Professional — Keratin Hair Gel',
             ],
         ],
@@ -451,7 +451,7 @@ return [
             'details' => 'La photo réunit les variantes S1, S2 et S3 de Natural Cologne. Chaque flacon contient 75 ml. Le statut affiché concerne cette sélection ; précisez la variante souhaitée au salon.',
             'size' => '75 ml par flacon',
             'photo' => [
-                'src' => 'images/products/Gabri Professional Natural Cologne.jpg',
+                'src' => 'images/products/gabri-professional-natural-cologne.jpg',
                 'alt' => 'Gabri Professional — Natural Cologne — S1, S2 & S3',
             ],
         ],
@@ -464,7 +464,7 @@ return [
             'details' => 'Ce soin de barbe réunit shampoing et après-shampoing. Le flacon pompe porte la mention Herbal Keratin de la gamme Gummy Professional.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/Gummy Professional 2-in-1 Beard Shampoo & Conditioner.jpeg',
+                'src' => 'images/products/gummy-professional-2-in-1-beard-shampoo-conditioner.jpg',
                 'alt' => 'Gummy Professional — 2-in-1 Beard Shampoo & Conditioner',
             ],
         ],
@@ -477,7 +477,7 @@ return [
             'details' => 'Cette huile Gummy Professional est dédiée à la barbe. Elle est présentée en petit flacon avec son étui.',
             'size' => '50 ml',
             'photo' => [
-                'src' => 'images/products/Gummy Professional Beard Oil – 50 ml.jpg',
+                'src' => 'images/products/gummy-professional-beard-oil-50-ml.jpg',
                 'alt' => 'Gummy Professional — Beard Oil — 50 ml',
             ],
         ],
@@ -490,7 +490,7 @@ return [
             'details' => 'Bump Repair complète la gamme de rasage Gummy Professional. Présenté en flacon avec son étui ; consultez les indications du fabricant pour son application.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/Gummy Professional Bump Repair.jpg',
+                'src' => 'images/products/gummy-professional-bump-repair.jpg',
                 'alt' => 'Gummy Professional — Bump Repair',
             ],
         ],
@@ -503,7 +503,7 @@ return [
             'details' => 'Ce gel de la gamme Hairgum Menthe est présenté en grand pot. Il fait partie des produits de coiffage proposés au salon.',
             'size' => '500 g',
             'photo' => [
-                'src' => 'images/products/Hairgum Menthe Styling Gel.jpg',
+                'src' => 'images/products/hairgum-menthe-styling-gel.jpg',
                 'alt' => 'Hairgum — Menthe — gel coiffant',
             ],
         ],
@@ -516,7 +516,7 @@ return [
             'details' => 'Road Tiaré est un baume coiffant Hairgum, présenté en boîte métallique. Son format se distingue des gels de la même marque.',
             'size' => '100 g',
             'photo' => [
-                'src' => 'images/products/Hairgum Road Tiaré.jpg',
+                'src' => 'images/products/hairgum-road-tiare.jpg',
                 'alt' => 'Hairgum — Road Tiaré — baume coiffant',
             ],
         ],
@@ -529,7 +529,7 @@ return [
             'details' => 'Ce baume Iléa Cosmétiques associe banane et maracudja. Il est présenté en pot dans la gamme de soins nourrissants de la marque.',
             'size' => '100 g',
             'photo' => [
-                'src' => 'images/products/Ilea Cosmetiques Baume Nourrissant Banane.jpg',
+                'src' => 'images/products/ilea-cosmetiques-baume-nourrissant-banane.jpg',
                 'alt' => 'Iléa Cosmétiques — Baume Nourrissant Banane & Maracudja',
             ],
         ],
@@ -542,7 +542,7 @@ return [
             'details' => 'Co-wash Douceur appartient à la gamme Grenade & Avocat de Iléa Cosmétiques. Ce soin lavant est présenté en flacon.',
             'size' => '250 ml',
             'photo' => [
-                'src' => 'images/products/Iléa Cosmétiques Co-wash Douceur – Grenade & Avocat.jpg',
+                'src' => 'images/products/ilea-cosmetiques-co-wash-douceur-grenade-avocat.jpg',
                 'alt' => 'Iléa Cosmétiques — Co-wash Douceur Grenade & Avocat',
             ],
         ],
@@ -555,7 +555,7 @@ return [
             'details' => 'Cette huile appartient à la gamme Banane & Maracudja de Iléa Cosmétiques. Son flacon pompe accompagne les soins capillaires de la gamme.',
             'size' => '100 ml',
             'photo' => [
-                'src' => 'images/products/Iléa Cosmétiques Huile Elixir Banane & Maracudja.jpg',
+                'src' => 'images/products/ilea-cosmetiques-huile-elixir-banane-maracudja.jpg',
                 'alt' => 'Iléa Cosmétiques — Huile Elixir Banane & Maracudja',
             ],
         ],
@@ -568,7 +568,7 @@ return [
             'details' => 'White Silver appartient à la gamme Teknia de Lakmé. Le flacon indique un shampoing nuanceur pour cheveux blonds, méchés et blancs.',
             'size' => '300 ml',
             'photo' => [
-                'src' => 'images/products/Lakmé Teknia White Silver Shampoo.jpg',
+                'src' => 'images/products/lakme-teknia-white-silver-shampoo.jpg',
                 'alt' => 'Lakmé Teknia — White Silver Shampoo',
             ],
         ],
@@ -581,7 +581,7 @@ return [
             'details' => 'Ce masque Iléa Cosmétiques est présenté en pot dans la gamme Grenade & Avocat. Son étiquette le destine aux cheveux secs et ternes.',
             'size' => '250 g',
             'photo' => [
-                'src' => 'images/products/Masque Douceur Grenade et Avocat.jpg',
+                'src' => 'images/products/masque-douceur-grenade-et-avocat.jpg',
                 'alt' => 'Iléa Cosmétiques — Masque Douceur Grenade & Avocat',
             ],
         ],
@@ -594,7 +594,7 @@ return [
             'details' => 'La teinte présentée est Purple, un violet. Cette Hair Color Wax Morfose combine produit de coiffage et couleur, en pot.',
             'size' => '100 ml',
             'photo' => [
-                'src' => 'images/products/Morfose Purple Styling Hair Colour Wax.jpeg',
+                'src' => 'images/products/morfose-purple-styling-hair-colour-wax.jpg',
                 'alt' => 'Morfose — Purple Styling Hair Color Wax',
             ],
         ],
@@ -607,7 +607,7 @@ return [
             'details' => 'Le pot Black porte la mention Extra Strong Hold. Ce gel noir fait partie de la gamme de coiffage Rolda, aux côtés de Power et de la crème White.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/Rolda Black Hair Styling Gel.jpg',
+                'src' => 'images/products/rolda-black-hair-styling-gel.jpg',
                 'alt' => 'Rolda — Black Hair Styling Gel',
             ],
         ],
@@ -620,7 +620,7 @@ return [
             'details' => 'La variante White porte la mention Extra Strong Hold. Cette crème de modelage se distingue des gels Black et Power de Rolda.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/Rolda Hair Molding Cream White.jpg',
+                'src' => 'images/products/rolda-hair-molding-cream-white.jpg',
                 'alt' => 'Rolda — Hair Molding Cream White',
             ],
         ],
@@ -633,7 +633,7 @@ return [
             'details' => 'La variante Power porte la mention Mega Strong Hold. Elle est présentée en pot avec une étiquette orange dans la gamme Rolda.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/Rolda Power Hair Styling Gel.jpg',
+                'src' => 'images/products/rolda-power-hair-styling-gel.jpg',
                 'alt' => 'Rolda — Power Hair Styling Gel',
             ],
         ],
@@ -646,7 +646,7 @@ return [
             'details' => 'Strengthener appartient à la gamme Black Earth Products de Taliah Waajid. Le pot indique la présence de tea tree et d’huile de coco.',
             'size' => '177 ml',
             'photo' => [
-                'src' => 'images/products/Taliah Waajid Black Earth Products Strengthener.jpg',
+                'src' => 'images/products/taliah-waajid-black-earth-products-strengthener.jpg',
                 'alt' => 'Taliah Waajid — Black Earth Products Strengthener',
             ],
         ],
@@ -659,7 +659,7 @@ return [
             'details' => 'Le pot Tropical Naturals porte les mentions 100% Pure Shea Butter et Fragrance Free. Il contient du beurre de karité sans parfum.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/Tropical Naturals 100% Pure Shea Butter.jpg',
+                'src' => 'images/products/tropical-naturals-100-pure-shea-butter.jpg',
                 'alt' => 'Tropical Naturals — 100% Pure Shea Butter',
             ],
         ],
@@ -672,7 +672,7 @@ return [
             'details' => 'Ce produit Vioplantes est présenté en pot sous le nom Traitement au soufre. Consultez les indications figurant sur le produit et demandez conseil au salon.',
             'size' => '',
             'photo' => [
-                'src' => 'images/products/VIOPLANTES TRAITEMENT AU SOUFRE.jpg',
+                'src' => 'images/products/vioplantes-traitement-au-soufre.jpg',
                 'alt' => 'Vioplantes — Traitement au soufre',
             ],
         ],
@@ -685,7 +685,7 @@ return [
             'details' => 'Le flacon Yona T porte la mention Huile de coco extra vierge. Il est présenté dans un format de 100 ml.',
             'size' => '100 ml',
             'photo' => [
-                'src' => 'images/products/YONA T Extra Virgin Coconut Oil.jpg',
+                'src' => 'images/products/yona-t-extra-virgin-coconut-oil.jpg',
                 'alt' => 'Yona T — Huile de coco extra vierge',
             ],
         ],
