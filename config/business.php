@@ -324,10 +324,17 @@ return [
     'products_background' => [
         'src' => 'images/business/product-shelf.jpg',
     ],
+    'product_categories' => [
+        'coiffage' => 'Coiffage & finition',
+        'lavage' => 'Lavage & après-shampoing',
+        'soins' => 'Soins & huiles',
+        'barbe' => 'Barbe & après-rasage',
+    ],
     'products' => [
         [
             'name' => 'Almond & Avocado Curl Enhancing Mousse',
             'brand' => 'Design Essentials',
+            'category' => 'coiffage',
             'description' => 'Mousse coiffante à l’amande et à l’avocat pour dessiner les boucles.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -341,6 +348,7 @@ return [
         [
             'name' => 'Almond & Avocado Honey Curl Forming Custard',
             'brand' => 'Design Essentials',
+            'category' => 'coiffage',
             'description' => 'Crème coiffante au miel pour la mise en forme des boucles.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -354,6 +362,7 @@ return [
         [
             'name' => 'Almond & Avocado Sulfate-Free Shampoo',
             'brand' => 'Design Essentials',
+            'category' => 'lavage',
             'description' => 'Shampoing sans sulfates, hydratant et démêlant, à l’amande et à l’avocat.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -367,6 +376,7 @@ return [
         [
             'name' => 'Coconut & Monoi Curl Refresher',
             'brand' => 'Design Essentials',
+            'category' => 'coiffage',
             'description' => 'Brume à l’eau de coco pour rafraîchir les boucles entre les coiffages.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -380,6 +390,7 @@ return [
         [
             'name' => 'Formations Finishing Spritz',
             'brand' => 'Design Essentials',
+            'category' => 'coiffage',
             'description' => 'Spray de finition pour fixer la coiffure.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -393,6 +404,7 @@ return [
         [
             'name' => 'Almond & Avocado Curling Crème',
             'brand' => 'Design Essentials',
+            'category' => 'coiffage',
             'description' => 'Crème coiffante à l’amande et à l’avocat pour les cheveux bouclés.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -406,6 +418,7 @@ return [
         [
             'name' => 'Rosemary & Mint Conditioner — tube',
             'brand' => 'Design Essentials',
+            'category' => 'lavage',
             'description' => 'Après-shampoing hydratant au romarin et à la menthe, présenté en tube.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -419,6 +432,7 @@ return [
         [
             'name' => 'Rosemary & Mint Conditioner — pot',
             'brand' => 'Design Essentials',
+            'category' => 'lavage',
             'description' => 'Après-shampoing hydratant au romarin et à la menthe, présenté en pot.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -432,6 +446,7 @@ return [
         [
             'name' => 'Keratin Hair Gel',
             'brand' => 'Gabri Professional',
+            'category' => 'coiffage',
             'description' => 'Gel coiffant à la kératine pour mettre en forme les cheveux.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -445,6 +460,7 @@ return [
         [
             'name' => 'Natural Cologne — S1, S2 & S3',
             'brand' => 'Gabri Professional',
+            'category' => 'barbe',
             'description' => 'Eaux de Cologne en petits flacons. Les trois variantes sont présentées sur la photo.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -458,6 +474,7 @@ return [
         [
             'name' => '2-in-1 Beard Shampoo & Conditioner',
             'brand' => 'Gummy Professional',
+            'category' => 'barbe',
             'description' => 'Shampoing et après-shampoing deux-en-un pour la barbe.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -471,6 +488,7 @@ return [
         [
             'name' => 'Beard Oil — 50 ml',
             'brand' => 'Gummy Professional',
+            'category' => 'barbe',
             'description' => 'Huile pour l’entretien quotidien de la barbe, en flacon de 50 ml.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -484,6 +502,7 @@ return [
         [
             'name' => 'Bump Repair',
             'brand' => 'Gummy Professional',
+            'category' => 'barbe',
             'description' => 'Soin après-rasage de la gamme Gummy Professional.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -497,6 +516,7 @@ return [
         [
             'name' => 'Menthe — gel coiffant',
             'brand' => 'Hairgum',
+            'category' => 'coiffage',
             'description' => 'Gel coiffant à la menthe pour structurer la coiffure.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -510,6 +530,7 @@ return [
         [
             'name' => 'Road Tiaré — baume coiffant',
             'brand' => 'Hairgum',
+            'category' => 'coiffage',
             'description' => 'Baume coiffant au tiaré, présenté en boîte métallique.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -523,6 +544,7 @@ return [
         [
             'name' => 'Baume Nourrissant Banane & Maracudja',
             'brand' => 'Iléa Cosmétiques',
+            'category' => 'soins',
             'description' => 'Baume capillaire nourrissant à la banane et au maracudja.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -536,6 +558,7 @@ return [
         [
             'name' => 'Co-wash Douceur Grenade & Avocat',
             'brand' => 'Iléa Cosmétiques',
+            'category' => 'lavage',
             'description' => 'Soin lavant à la grenade et à l’avocat pour le lavage des cheveux.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -549,6 +572,7 @@ return [
         [
             'name' => 'Huile Elixir Banane & Maracudja',
             'brand' => 'Iléa Cosmétiques',
+            'category' => 'soins',
             'description' => 'Huile capillaire à la banane et au maracudja, en flacon pompe.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -562,6 +586,7 @@ return [
         [
             'name' => 'White Silver Shampoo',
             'brand' => 'Lakmé Teknia',
+            'category' => 'lavage',
             'description' => 'Shampoing nuanceur pour cheveux blonds, méchés et blancs.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -575,6 +600,7 @@ return [
         [
             'name' => 'Masque Douceur Grenade & Avocat',
             'brand' => 'Iléa Cosmétiques',
+            'category' => 'soins',
             'description' => 'Masque capillaire à la grenade et à l’avocat pour cheveux secs et ternes.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -588,6 +614,7 @@ return [
         [
             'name' => 'Purple Styling Hair Color Wax',
             'brand' => 'Morfose',
+            'category' => 'coiffage',
             'description' => 'Cire coiffante colorante violette pour personnaliser la coiffure.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -601,6 +628,7 @@ return [
         [
             'name' => 'Black Hair Styling Gel',
             'brand' => 'Rolda',
+            'category' => 'coiffage',
             'description' => 'Gel coiffant noir à fixation extra forte.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -614,6 +642,7 @@ return [
         [
             'name' => 'Hair Molding Cream White',
             'brand' => 'Rolda',
+            'category' => 'coiffage',
             'description' => 'Crème coiffante à fixation extra forte pour sculpter les cheveux.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -627,6 +656,7 @@ return [
         [
             'name' => 'Power Hair Styling Gel',
             'brand' => 'Rolda',
+            'category' => 'coiffage',
             'description' => 'Gel coiffant de la gamme Power à fixation forte.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -640,6 +670,7 @@ return [
         [
             'name' => 'Black Earth Products Strengthener',
             'brand' => 'Taliah Waajid',
+            'category' => 'soins',
             'description' => 'Soin capillaire au tea tree et à l’huile de coco.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -653,6 +684,7 @@ return [
         [
             'name' => '100% Pure Shea Butter',
             'brand' => 'Tropical Naturals',
+            'category' => 'soins',
             'description' => 'Beurre de karité pur sans parfum, présenté en pot.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -666,6 +698,7 @@ return [
         [
             'name' => 'Traitement au soufre',
             'brand' => 'Vioplantes',
+            'category' => 'soins',
             'description' => 'Soin au soufre pour le cuir chevelu. Demandez conseil au salon pour son utilisation.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',
@@ -679,6 +712,7 @@ return [
         [
             'name' => 'Huile de coco extra vierge',
             'brand' => 'Yona T',
+            'category' => 'soins',
             'description' => 'Huile de coco extra vierge, en flacon de 100 ml.',
             'price' => 'Prix sur demande',
             'stock' => 'in_stock',

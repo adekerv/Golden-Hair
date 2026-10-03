@@ -39,11 +39,11 @@ class ProductCardsTest extends TestCase
 
         $document = new \DOMDocument;
         @$document->loadHTML($response->getContent());
-        $images = (new \DOMXPath($document))->query('//*[@id="product-track"]//img');
+        $images = (new \DOMXPath($document))->query('//*[@id="product-grid"]//img');
         $this->assertCount(28, $images);
         $xpath = new \DOMXPath($document);
-        $this->assertCount(28, $xpath->query('//*[@id="product-track"]//details/summary[@data-product-open]'));
-        $this->assertCount(28, $xpath->query('//*[@id="product-track"]//*[@data-stock="in_stock"]'));
+        $this->assertCount(28, $xpath->query('//*[@id="product-grid"]//details/summary[@data-product-open]'));
+        $this->assertCount(28, $xpath->query('//*[@id="product-grid"]//*[@data-stock="in_stock"]'));
         $this->assertCount(1, $xpath->query('//dialog[@aria-labelledby="product-dialog-title"]'));
         foreach ($images as $image) {
             $src = $image->getAttribute('src');
@@ -65,7 +65,7 @@ class ProductCardsTest extends TestCase
         config(['business.products_background' => ['src' => 'images/business/missing.jpg']]);
 
         $this->get('/')->assertOk()
-            ->assertSee('id="product-track"', false)
+            ->assertSee('id="product-grid"', false)
             ->assertDontSee('class="products-backdrop"', false)
             ->assertDontSee('/images/business/missing.jpg', false);
     }
@@ -83,15 +83,75 @@ class ProductCardsTest extends TestCase
             ->assertSee('Photo à venir');
     }
 
-    public function test_empty_catalogue_has_no_empty_carousel_controls(): void
+    public function test_empty_catalogue_has_no_empty_controls(): void
     {
         config(['business.products' => []]);
 
         $this->get('/')
             ->assertSee('Notre sélection de produits sera bientôt disponible.')
-            ->assertDontSee('id="product-track"', false)
-            ->assertDontSee('<dialog', false)
-            ->assertDontSee('aria-label="Produit suivant"', false);
+            ->assertDontSee('id="product-grid"', false)
+            ->assertDontSee('data-product-filters', false)
+            ->assertDontSee('data-product-more', false)
+            ->assertDontSee('<dialog', false);
+    }
+
+    public function test_every_product_belongs_to_a_known_category_and_every_category_is_used(): void
+    {
+        $categories = config('business.product_categories');
+        $assigned = array_count_values(array_column(config('business.products'), 'category'));
+
+        foreach (array_column(config('business.products'), 'category') as $category) {
+            $this->assertArrayHasKey($category, $categories);
+        }
+        foreach (array_keys($categories) as $slug) {
+            $this->assertGreaterThan(0, $assigned[$slug] ?? 0, "No product uses the {$slug} category");
+        }
+        $this->assertSame(28, array_sum($assigned));
+    }
+
+    public function test_filter_chips_show_each_category_with_its_product_count(): void
+    {
+        $response = $this->get('/')->assertOk();
+        $counts = array_count_values(array_column(config('business.products'), 'category'));
+
+        $response->assertSee('data-product-filters hidden', false)
+            ->assertSee('data-product-filter="all" aria-pressed="true" class="filter-chip">Tous <span class="filter-count">28</span>', false);
+        foreach (config('business.product_categories') as $slug => $label) {
+            $response->assertSee('data-product-filter="'.$slug.'" aria-pressed="false" class="filter-chip">'.e($label).' <span class="filter-count">'.$counts[$slug].'</span>', false)
+                ->assertSee('data-category="'.$slug.'"', false);
+        }
+
+        $document = new \DOMDocument;
+        @$document->loadHTML($response->getContent());
+        $xpath = new \DOMXPath($document);
+        $this->assertCount(28, $xpath->query('//*[@id="product-grid"]/article[@data-product-card and @data-category]'));
+        $this->assertCount(1, $xpath->query('//*[@data-product-more-wrap and @hidden]'));
+    }
+
+    public function test_unknown_or_missing_categories_stay_visible_under_all_without_a_chip(): void
+    {
+        config(['business.products' => [
+            ['name' => 'A', 'category' => 'coiffage'],
+            ['name' => 'B', 'category' => 'barbe'],
+            ['name' => 'C', 'category' => 'inconnue'],
+            ['name' => 'D'],
+        ]]);
+
+        $response = $this->get('/')->assertOk()
+            ->assertSee('Tous <span class="filter-count">4</span>', false)
+            ->assertDontSee('data-product-filter="inconnue"', false)
+            ->assertDontSee('data-category="inconnue"', false);
+        $this->assertSame([
+            'coiffage' => ['label' => 'Coiffage & finition', 'count' => 1],
+            'barbe' => ['label' => 'Barbe & après-rasage', 'count' => 1],
+        ], $response->viewData('productCategories'));
+    }
+
+    public function test_filters_are_omitted_when_there_is_nothing_to_filter(): void
+    {
+        config(['business.products' => [['name' => 'Seul', 'category' => 'barbe']]]);
+
+        $this->get('/')->assertOk()->assertDontSee('data-product-filters', false)->assertSee('Seul');
     }
 
     public function test_product_text_is_escaped_in_each_editable_field(): void

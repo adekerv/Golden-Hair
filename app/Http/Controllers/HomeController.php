@@ -27,6 +27,7 @@ class HomeController extends Controller
                     $item['photo'] = $item['style_photos'][0] ?? null;
                 }
                 if ($group === 'products') {
+                    $item['category'] = array_key_exists($item['category'] ?? '', $business['product_categories'] ?? []) ? $item['category'] : null;
                     $item['availability'] = match ($item['stock'] ?? null) {
                         'in_stock' => ['status' => 'in_stock', 'label' => 'En stock'],
                         'out_of_stock' => ['status' => 'out_of_stock', 'label' => 'Rupture de stock'],
@@ -38,8 +39,29 @@ class HomeController extends Controller
         }
 
         $structuredData = $this->structuredData($business);
+        $productCategories = $this->productCategories($business);
 
-        return view('pages.home', compact('business', 'photos', 'heroPhoto', 'productsBackground', 'structuredData'));
+        return view('pages.home', compact('business', 'photos', 'heroPhoto', 'productsBackground', 'structuredData', 'productCategories'));
+    }
+
+    /**
+     * Filter options for the catalogue: only categories that contain at least one product.
+     *
+     * @param  array<string, mixed>  $business
+     * @return array<string, array{label: string, count: int}>
+     */
+    private function productCategories(array $business): array
+    {
+        $counts = array_count_values(array_filter(array_column($business['products'], 'category')));
+        $categories = [];
+
+        foreach ($business['product_categories'] ?? [] as $slug => $label) {
+            if (($counts[$slug] ?? 0) > 0) {
+                $categories[$slug] = ['label' => $label, 'count' => $counts[$slug]];
+            }
+        }
+
+        return $categories;
     }
 
     /**

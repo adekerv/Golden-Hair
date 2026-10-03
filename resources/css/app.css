@@ -214,3 +214,12 @@
     :root:not([data-theme='light']) .theme-toggle .icon-moon { display: none; }
     :root:not([data-theme='light']) .theme-toggle .icon-sun { display: block; }
 }
+
+.filter-chip { display: inline-flex; min-height: 2.75rem; align-items: center; gap: .5rem; border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); border-radius: 999px; padding: .5rem 1.1rem; font-size: .875rem; font-weight: 700; transition: background-color .2s, color .2s, border-color .2s; }
+.filter-chip:hover { border-color: var(--ink); }
+.filter-chip[aria-pressed='true'] { border-color: var(--ink); background: var(--ink); color: var(--surface); }
+.filter-count { font-weight: 500; opacity: .75; }
+.filter-count::before { content: '('; }
+.filter-count::after { content: ')'; }
+.more-button { display: inline-flex; min-height: 3.25rem; align-items: center; justify-content: center; border: 1px solid var(--ink); border-radius: 999px; padding: .75rem 1.75rem; font-weight: 700; transition: background-color .2s, color .2s; }
+.more-button:hover { background: var(--ink); color: var(--surface); }
