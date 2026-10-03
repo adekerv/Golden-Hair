@@ -1,0 +1,19 @@
+#!/bin/sh
+# Blocks a commit when the static site in dist/ no longer matches the sources that generate it.
+# Enable once per clone with: git config core.hooksPath .githooks
+
+staged=$(git diff --cached --name-only -- app config resources routes public package.json vercel.json)
+[ -z "$staged" ] && exit 0
+
+for tool in npm php; do
+    if ! command -v "$tool" >/dev/null 2>&1; then
+        echo "pre-commit: $tool not found, skipping the dist/ freshness check." >&2
+        exit 0
+    fi
+done
+
+if ! npm run --silent check:static; then
+    echo "" >&2
+    echo "Commit blocked: dist/ is out of date. Run 'npm run build:static', stage dist/, then commit again." >&2
+    exit 1
+fi

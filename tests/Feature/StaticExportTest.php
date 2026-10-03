@@ -67,6 +67,59 @@ class StaticExportTest extends TestCase
         $this->assertStringStartsWith('echo ', $config['installCommand']);
     }
 
+    public function test_check_passes_for_a_current_export_and_never_writes(): void
+    {
+        $output = $this->temporary.'/output';
+        $this->artisan('site:export', ['--output' => $output])->assertSuccessful();
+        $before = File::get($output.'/index.html');
+
+        $this->artisan('site:export', ['--output' => $output, '--check' => true])
+            ->expectsOutputToContain('up to date')
+            ->assertSuccessful();
+
+        $this->assertSame($before, File::get($output.'/index.html'));
+        $this->assertSame([], glob(storage_path('framework/cache/static-export-*')));
+    }
+
+    public function test_check_reports_changed_missing_and_obsolete_files_without_touching_them(): void
+    {
+        $output = $this->temporary.'/output';
+        $this->artisan('site:export', ['--output' => $output])->assertSuccessful();
+        File::put($output.'/index.html', 'tampered');
+        File::delete($output.'/robots.txt');
+        File::put($output.'/obsolete.html', 'old');
+
+        $this->artisan('site:export', ['--output' => $output, '--check' => true])
+            ->expectsOutputToContain('out of date')
+            ->expectsOutputToContain('changed: index.html')
+            ->expectsOutputToContain('missing: robots.txt')
+            ->expectsOutputToContain('obsolete: obsolete.html')
+            ->assertFailed();
+
+        $this->assertSame('tampered', File::get($output.'/index.html'));
+        $this->assertFileDoesNotExist($output.'/robots.txt');
+        $this->assertFileExists($output.'/obsolete.html');
+        $this->assertSame([], glob(storage_path('framework/cache/static-export-*')));
+    }
+
+    public function test_check_detects_a_changed_public_asset(): void
+    {
+        $output = $this->temporary.'/output';
+        $this->artisan('site:export', ['--output' => $output])->assertSuccessful();
+        File::put($this->temporary.'/public/images/photo.jpg', 'replacement-image');
+
+        $this->artisan('site:export', ['--output' => $output, '--check' => true])
+            ->expectsOutputToContain('changed: images/photo.jpg')
+            ->assertFailed();
+    }
+
+    public function test_check_fails_when_there_is_no_export_yet(): void
+    {
+        $this->artisan('site:export', ['--output' => $this->temporary.'/missing', '--check' => true])->assertFailed();
+
+        $this->assertDirectoryDoesNotExist($this->temporary.'/missing');
+    }
+
     public function test_export_refuses_to_replace_an_unrelated_directory(): void
     {
         $output = $this->temporary.'/unrelated';

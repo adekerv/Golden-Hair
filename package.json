@@ -6,6 +6,7 @@
         "build": "vite build",
         "dev": "vite",
         "build:static": "npm run build && APP_ENV=production APP_DEBUG=false php artisan site:export",
+        "check:static": "npm run build && APP_ENV=production APP_DEBUG=false php artisan site:export --check",
         "test:js": "node --test tests/Frontend/*.test.js"
     },
     "devDependencies": {
