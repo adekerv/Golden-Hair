@@ -14,11 +14,12 @@ Golden Hair est une landing page pour un salon de coiffure, présentant les pres
 ## Fonctionnalités
 
 - **Landing page** — sections hero, prestations, galerie et contact
-- **Catalogue de produits** — 28 fiches produits avec fenêtres de détail
+- **Catalogue de produits** — 28 fiches en grille adaptative, filtres par catégorie et fenêtres de détail
 - **Grille tarifaire** — tous les tarifs du salon, regroupés par catégorie
 - **Pages légales** — `/mentions-legales` et `/confidentialite`
 - **Contenu piloté par configuration** — modifiez textes, tarifs et photos sans toucher au code
 - **Design responsive** construit avec Tailwind CSS 4
+- **Mode clair / sombre** — suit les préférences du système, avec un bouton pour choisir (mémorisé dans le navigateur)
 - **Testé** — tests fonctionnels PHP et tests unitaires JavaScript
 
 ## Stack technique
@@ -58,16 +59,33 @@ Pour le développement frontend, lancez le serveur de développement Vite dans u
 npm run dev
 ```
 
-### Build de production
+### Build de production et déploiement
 
 ```sh
-npm run build
+npm run build:static
 ```
+
+Compile les assets puis exporte le site statique dans `dist/`, qui est versionné et servi tel quel par Vercel (voir `vercel.json`). Relancez cette commande et commitez `dist/` après chaque modification de contenu, de style ou de photo.
+
+Pour vérifier que `dist/` correspond bien aux sources sans le modifier :
+
+```sh
+npm run check:static
+```
+
+Un hook `pre-commit` (dossier `.githooks/`) lance cette vérification dès que des fichiers sources sont indexés et bloque le commit si `dist/` est périmé. Activez-le une fois par clone :
+
+```sh
+git config core.hooksPath .githooks
+```
+
+Renseignez `SITE_URL` dans `.env` (par exemple `https://www.exemple.fr`) avant l'export pour activer le lien canonique et l'image d'aperçu lors des partages (WhatsApp, Facebook, etc.).
 
 ## Tests
 
 ```sh
 php artisan test
+npm run test:js
 ```
 
 Les tests unitaires JavaScript se trouvent dans `tests/Frontend/`.
@@ -87,7 +105,7 @@ docs/                  # Documentation DWWM
 
 ## Personnaliser le contenu
 
-Tout ce qui est visible sur le site est configuré dans `config/business.php` : nom du salon, slogan, coordonnées, horaires d'ouverture, prestations, grilles tarifaires et catalogue de produits. Les photos vont dans `public/images/`. Les mentions légales sont configurées dans `config/legal.php` et affichées sur `/mentions-legales` et `/confidentialite`.
+Tout ce qui est visible sur le site est configuré dans `config/business.php` : nom du salon, slogan, coordonnées, horaires d'ouverture (`hours`), prestations, grilles tarifaires et catalogue de produits (`products`, classés selon `product_categories`). Les photos vont dans `public/images/` ; nommez les fichiers en minuscules, sans espaces ni accents (`mon-produit.jpg`). Les mentions légales sont configurées dans `config/legal.php` et affichées sur `/mentions-legales` et `/confidentialite`.
 
 ## Documentation
 
