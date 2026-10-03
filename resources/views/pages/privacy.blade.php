@@ -25,7 +25,7 @@
     <section aria-labelledby="browsing-title">
         <h2 id="browsing-title">Navigation sur le site</h2>
         <p>Vous pouvez consulter les prestations, tarifs et produits sans créer de compte. Le site ne comporte pas de formulaire de collecte, de newsletter, de commande ou de paiement en ligne.</p>
-        <p>Les pages publiques de cette application ne déposent pas de cookie. Les photos et polices sont servies par le site. Aucun outil publicitaire, pixel de suivi ou outil de mesure d’audience n’est intégré au code du site. Les boutons Instagram et WhatsApp sont de simples liens, sans contenu social embarqué.</p>
+        <p>Les pages publiques de cette application ne déposent pas de cookie. Si vous choisissez le thème clair ou sombre, ce choix est mémorisé uniquement dans le stockage local de votre navigateur : il n’est jamais transmis. Les photos et polices sont servies par le site. Aucun outil publicitaire, pixel de suivi ou outil de mesure d’audience n’est intégré au code du site. Les boutons Instagram et WhatsApp sont de simples liens, sans contenu social embarqué.</p>
         <p>Les serveurs peuvent traiter des données techniques telles que l’adresse IP, l’heure de connexion, l’adresse de la page demandée et des informations sur le navigateur pour délivrer les pages, diagnostiquer les erreurs et assurer la sécurité du service. La base envisagée pour ces opérations est l’intérêt légitime à assurer le fonctionnement et la sécurité du site.</p>
         <p>Hébergeur et accès techniques : {{ $legal['host']['name'] ?: 'à préciser lors du choix de l’hébergement' }}. Durée de conservation des journaux : <strong>{{ $legal['privacy']['log_retention'] ?: 'non renseignée' }}</strong>.</p>
     </section>

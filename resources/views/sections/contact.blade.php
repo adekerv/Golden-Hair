@@ -1,7 +1,7 @@
-<section id="contact" class="bg-wine py-20 text-white lg:py-28">
+<section id="contact" class="bg-contact py-20 text-white lg:py-28">
     <div class="mx-auto grid max-w-[1440px] gap-12 px-5 lg:grid-cols-2 lg:gap-20 lg:px-16">
         <div class="min-w-0">
-            <p class="text-sm font-bold uppercase tracking-[.22em] text-gold">Contact</p>
+            <p class="text-sm font-bold uppercase tracking-[.22em] text-gold-soft">Contact</p>
             <h2 class="mt-3 max-w-xl font-display text-5xl font-semibold leading-[1.05] lg:text-7xl">Parlons de votre prochain style</h2>
             <p class="mt-7 max-w-lg text-white/80">Pour une information sur une prestation ou une disponibilité, contactez directement le salon.</p>
             <div class="mt-9 flex flex-wrap gap-3">
@@ -21,40 +21,40 @@
                 @endif
             </div>
         </div>
-        <div class="min-w-0 rounded-[32px] bg-ivory p-7 text-charcoal shadow-2xl lg:p-10">
-            <p class="text-sm font-bold uppercase tracking-[.18em] text-wine">Venir au salon</p>
+        <div class="min-w-0 rounded-[32px] bg-card-alt p-7 text-ink shadow-2xl lg:p-10">
+            <p class="text-sm font-bold uppercase tracking-[.18em] text-accent">Venir au salon</p>
             <h3 class="mt-3 font-display text-4xl font-semibold">{{ $business['name'] }}</h3>
             <div class="mt-8 space-y-7">
-                <div class="border-b border-charcoal/10 pb-6">
-                    <p class="text-sm font-bold text-charcoal/75">ADRESSE @if(!$business['contact']['address_confirmed']) · À CONFIRMER @endif</p>
+                <div class="border-b border-ink/10 pb-6">
+                    <p class="text-sm font-bold text-ink/75">ADRESSE @if(!$business['contact']['address_confirmed']) · À CONFIRMER @endif</p>
                     <address class="mt-2 text-lg font-semibold not-italic">{{ $business['contact']['address'] }}<br>{{ $business['contact']['postal_city'] }}</address>
                 </div>
                 @if($business['contact']['phone'])
-                    <div class="border-b border-charcoal/10 pb-6">
-                        <p class="text-sm font-bold text-charcoal/75">TÉLÉPHONE @if(!$business['contact']['phone_confirmed']) · À CONFIRMER @endif</p>
+                    <div class="border-b border-ink/10 pb-6">
+                        <p class="text-sm font-bold text-ink/75">TÉLÉPHONE @if(!$business['contact']['phone_confirmed']) · À CONFIRMER @endif</p>
                         <p class="mt-2 text-lg font-semibold">{{ $business['contact']['phone'] }}</p>
                     </div>
                 @endif
                 @if($business['contact']['whatsapp'])
-                    <div class="border-b border-charcoal/10 pb-6">
-                        <p class="text-sm font-bold text-charcoal/75">WHATSAPP</p>
+                    <div class="border-b border-ink/10 pb-6">
+                        <p class="text-sm font-bold text-ink/75">WHATSAPP</p>
                         <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $business['contact']['whatsapp']) }}" class="contact-detail-link">{{ $business['contact']['whatsapp'] }}</a>
                     </div>
                 @endif
                 @if($business['contact']['email'])
-                    <div class="border-b border-charcoal/10 pb-6">
-                        <p class="text-sm font-bold text-charcoal/75">E-MAIL</p>
+                    <div class="border-b border-ink/10 pb-6">
+                        <p class="text-sm font-bold text-ink/75">E-MAIL</p>
                         <a href="mailto:{{ $business['contact']['email'] }}" class="contact-detail-link">{{ $business['contact']['email'] }}</a>
                     </div>
                 @endif
                 @if(!empty($business['contact']['instagram']))
-                    <div class="border-b border-charcoal/10 pb-6">
-                        <p class="text-sm font-bold text-charcoal/75">INSTAGRAM</p>
+                    <div class="border-b border-ink/10 pb-6">
+                        <p class="text-sm font-bold text-ink/75">INSTAGRAM</p>
                         <a href="{{ $business['contact']['instagram'] }}" class="contact-detail-link" rel="noreferrer">{{ $business['contact']['instagram_label'] }}</a>
                     </div>
                 @endif
                 <div>
-                    <h4 class="text-sm font-bold text-charcoal/75">HORAIRES</h4>
+                    <h4 class="text-sm font-bold text-ink/75">HORAIRES</h4>
                     @if(count($business['hours']))
                         <dl class="mt-2 space-y-2">
                             @foreach($business['hours'] as $opening)
